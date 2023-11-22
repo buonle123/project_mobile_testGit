@@ -35,7 +35,6 @@ const RegisterScreen = ({ navigation }) => {
         order: [],
         address: '',
         mail: mail,
-        
     }
 
     function toggleDatePicker() {
@@ -60,7 +59,7 @@ const RegisterScreen = ({ navigation }) => {
     }
 
 
-    const add = ()=>{
+    const add = () => {
         addUser(user);
         console.log(userAccounts.length);
     }
@@ -133,7 +132,7 @@ const RegisterScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-        </SafeAreaView >
+        </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({

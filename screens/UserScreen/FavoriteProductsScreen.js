@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Image, StyleSheet, Dimensions, Button, Touchabl
 import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import { SelectList } from 'react-native-dropdown-select-list';
+import { StackView } from '@react-navigation/stack';
 import { useFavoriteProducts } from '../../context/context';
 import { imgSliderHome } from '../../data/data';
 const { width, height } = Dimensions.get('window');
@@ -17,6 +18,9 @@ export default function FavoriteProductsScreen({ navigation }) {
       setindexSlide(slide)
     }
   }
+
+
+  // autoSlide();
 
   const dotClick = (index) => {
     setindexSlide(index);
@@ -53,9 +57,13 @@ export default function FavoriteProductsScreen({ navigation }) {
 
   const { favoriteProducts, setFavoriteProducts } = useFavoriteProducts();
 
+
+
+
   const updateSelect = (it) => {
     console.log(it);
     setselectType(it);
+
     // setArrItems(FavoriteProducts);
   };
 
@@ -77,58 +85,35 @@ export default function FavoriteProductsScreen({ navigation }) {
 
     if (favoriteProducts.length == 0) {
       return (
-        <View className='w-full my-5'>
-          <Text className='text-xl font-normal text-center'>Danh sách sản phẩm trống!</Text>
+        <View className='items-center justify-center w-full my-5'>
+          <Image className='w-60 h-60' source={require('../../assets/null.png')}/>
         </View>
       )
     } else {
-      if (selectType == 'Tất cả') {
-        return (
-          favoriteProducts.map((item, index) => {
-            return (
-              <TouchableOpacity key={index}>
-                <View className='flex-row items-center justify-around w-full h-24 mx-auto bg-white rounded-2xl' style={st.shadow}>
-                  <Image className='object-contain w-16 h-20' source={item.img[0]} />
-                  <Text>{item.title}</Text>
-                  <TouchableOpacity key={index} onPress={(index) => { deleteI(index) }}>
-                    <Ionicon name='trash' size={35} color={'rgb(300 31 100)'} />
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            );
-          })
-        )
+      if (selectType == "Tất cả") {
+        return (favoriteProducts.map((item, index) => {
+          return (
+            Item(item, index)
+          )
+        }))
       } else {
-        {
-          list.map((item, index) => {
-            return (
-              <TouchableOpacity key={index}>
-                <View className='flex-row items-center justify-around w-full h-24 mx-auto bg-white rounded-2xl' style={st.shadow}>
-                  <Image className='object-contain w-16 h-20' source={item.img[0]} />
-                  <Text>{item.title}</Text>
-                  <TouchableOpacity key={index} onPress={(index) => { deleteI(index) }}>
-                    <Ionicon name='trash' size={35} color={'rgb(300 31 100)'} />
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            );
-          })
-        }
+        return (favoriteProducts.map((item, index) => {
+          Item(item, index)
+        }))
       }
     }
   };
 
 
 
-  const [products, setProducts] = useState(favoriteProducts);
 
-  useEffect(() => {
-    setProducts(favoriteProducts);
-  }, [favoriteProducts]);
 
-  const deleteI = (index) => {
+  const deleteI = (tt) => {
     const arrN = [...favoriteProducts];
-
+    const vt = arrN.findIndex((item, index) => {
+      return item.title == tt;
+    })
+    console.log(vt);
     setselectType(selectType)
     arrN.splice(vt, 1);
     setFavoriteProducts(arrN)
@@ -139,7 +124,7 @@ export default function FavoriteProductsScreen({ navigation }) {
   return (
     <View className='items-center flex-1 pt-5 bg-neutral-100 '>
       <View style={{ height: height * 0.08, width: width }} className='flex-row items-center justify-center p-2 bg-slate-400'>
-        <Text className='text-xl font-semibold text-center text-white'>FavoriteProducts</Text>
+        <Text className='text-xl font-semibold text-center text-white'>favoriteProducts</Text>
       </View>
       <View className='items-center justify-start w-full h-auto bg-white' style={{ flex: 0.999 }}>
         <View>
@@ -176,19 +161,7 @@ export default function FavoriteProductsScreen({ navigation }) {
 
             <View className='w-full h-56'>
               <ScrollView style={{ width: width }}>
-                {/* {favoriteProducts.map((item, index) => {
-                  return (
-                    <TouchableOpacity key={index}>
-                      <View className='flex-row items-center justify-around w-full h-24 mx-auto bg-white rounded-2xl' style={st.shadow}>
-                        <Image className='object-contain w-16 h-20' source={item.img[0]} />
-                        <Text>{item.title}</Text>
-                        <TouchableOpacity key={item.title} onPress={() => { deleteI(item.title) }}>
-                          <Ionicon name='trash' size={35} color={'rgb(300 31 100)'} />
-                        </TouchableOpacity>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })} */}
+                
                 {renderItems()}
               </ScrollView>
             </View>

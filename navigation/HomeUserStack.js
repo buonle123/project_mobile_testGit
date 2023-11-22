@@ -14,6 +14,7 @@ export default function HomeUserStack() {
         }}>
           <stack.Screen name='HomeUserSC' component={HomeUser}/>
           <stack.Screen name='ProductDetails' component={ProductDetails}/>
+          <stack.Screen name='OrderScreen' component={OrderScreen}/>
         </stack.Navigator>
   )
 }

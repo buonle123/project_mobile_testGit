@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, SafeAreaView, ScrollView, Image, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, SafeAreaView, ScrollView, Image, Dimensions, Alert } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import Ionicon from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 // import { Product } from '../../components/style';
 import { dataProduct, imgSliderHome } from '../../data/data';
 
@@ -49,8 +50,8 @@ export default function HomeUser({ navigation }) {
 
 
   const dots = imgSliderHome.map((i, index) => (
-    <TouchableOpacity key={index} className='justify-center items-center mx-2 h-12'   onPress={() => dotClick(index)}>
-      <Text 
+    <TouchableOpacity key={index} className='items-center justify-center h-12 mx-2' onPress={() => dotClick(index)}>
+      <Text
         className={`text-6xl h-12 font-thin ${indexSlide === i.id ? 'text-black font-extralight' : 'text-gray-300 font-thin'
           }`}
         onPressIn={() => {
@@ -106,6 +107,26 @@ export default function HomeUser({ navigation }) {
 
 
 
+  const logOut = () => {
+    Alert.alert(
+      'LOG OUT',
+      'My Alert Msg',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK', onPress: () => navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }],})
+        },
+      ],
+      { cancelable: false }
+    );
+  }
+
+
+
 
   const Product = (item, index) => {
     let priceNew = item.priceNew.toLocaleString('en-US');
@@ -115,7 +136,7 @@ export default function HomeUser({ navigation }) {
       navigation.navigate('ProductDetails', { productItem: item });
     };
     return (
-      <TouchableOpacity key={index}  onPress={() => {navigateToProductDetails()}} className='w-44 h-80 items-center bg-white rounded-lg mx-2' style={{ elevation: 5, shadowColor: 'black', shadowOffset: { width: 1, height: 2 }, shadowOpacity: 0.1, shadowRadius: 2, }}>
+      <TouchableOpacity key={index} onPress={() => { navigateToProductDetails() }} className='items-center mx-2 bg-white rounded-lg w-44 h-80' style={{ elevation: 5, shadowColor: 'black', shadowOffset: { width: 1, height: 2 }, shadowOpacity: 0.1, shadowRadius: 2, }}>
         <View className='h-40 mt-6'>
           <Image className='w-36 h-36' style={{ objectFit: 'contain' }} source={item.img[0]} />
         </View>
@@ -123,8 +144,8 @@ export default function HomeUser({ navigation }) {
           <Text className='text-base font-medium'>{item.title}</Text>
         </View>
         <View className='mt-3'>
-          <Text className='text-blue-600 text-base'>{priceNew}₫</Text>
-          <Text className='text-zinc-400 text-xs text-center' style={{ textDecorationLine: 'line-through' }}>{priceOld}₫</Text>
+          <Text className='text-base text-blue-600'>{priceNew}₫</Text>
+          <Text className='text-xs text-center text-zinc-400' style={{ textDecorationLine: 'line-through' }}>{priceOld}₫</Text>
         </View>
       </TouchableOpacity>
     )
@@ -136,13 +157,13 @@ export default function HomeUser({ navigation }) {
 
   return (
     <View className='flex-1 mt-5'>
-      <View style={{ flex: 0.08 }} className='bg-slate-200 p-2 flex-row justify-between items-center'>
-        <TouchableOpacity className='justify-center items-center w-10 h-10 rounded-xl bg-slate-400 '>
-          <Text>{<Ionicon name='chevron-back-outline' size={30} color={'white'} />}</Text>
+      <View style={{ flex: 0.08 }} className='flex-row items-center justify-between p-2 bg-slate-200'>
+        <TouchableOpacity className='items-center justify-center w-10 h-10 rounded-xl bg-slate-400 ' onPress={() => { logOut() }}>
+          <Text style={{ fontSize: 20 }} transform={[{ rotate: "180deg" },]}>{<MaterialIcons name='logout' size={20} color={'white'} />}</Text>
         </TouchableOpacity>
 
-        <View className='w-72 h-full justify-center flex-row justify-center items-center'>
-          <TextInput placeholder='Search' value={search} onChangeText={updateSeach} className='h-4/6 w-9/12 rounded-lg border-slate-400 border-solid border-2 px-2 mx-2' />
+        <View className='flex-row items-center justify-center h-full w-72'>
+          <TextInput placeholder='Search' value={search} onChangeText={updateSeach} className='w-9/12 px-2 mx-2 border-2 border-solid rounded-lg h-4/6 border-slate-400' />
 
           <TouchableOpacity>
             <Ionicon name='search-outline' color={'rgb(148, 163, 184)'} size={36} />
@@ -151,7 +172,7 @@ export default function HomeUser({ navigation }) {
       </View>
 
       <View className='' style={{ flex: 0.9 }}>
-        <View className='h-10 my-2 justify-center items-center flex-row border-slate-400 ' style={{}}>
+        <View className='flex-row items-center justify-center h-10 my-2 border-slate-400 ' style={{}}>
           {pagination.map((item) => {
             const id = item.id;
             return (
@@ -170,38 +191,38 @@ export default function HomeUser({ navigation }) {
             // onChangeSetIndex(nativeEvent);
             const categoryIndex = nativeEvent.contentOffset.y
             // console.log(categoryIndex)
-            if(categoryIndex <= 150){
+            if (categoryIndex <= 150) {
               setActiveId(7);
-            } else if(categoryIndex <= 550){
+            } else if (categoryIndex <= 550) {
               setActiveId(8);
-            } else{
+            } else {
               setActiveId(9);
             }
           }}
 
         >
 
-        {/* SLIDER */}
-          <View className=' w-full justify-center items-center' style={{ flex: 0.9 }}>
+          {/* SLIDER */}
+          <View className='items-center justify-center w-full ' style={{ flex: 0.9 }}>
             <ScrollView
               onScroll={({ nativeEvent }) => onChange(nativeEvent)}
               showsHorizontalScrollIndicator={false}
               pagingEnabled
               horizontal
-              className=' bg-white'
+              className='bg-white '
               ref={scrollRef}
               scrollEventThrottle={32}
             >
               {imgSliderHome.map((img, index) => {
                 return (
-                  <View key={index} className='justify-center items-center' style={{ width: width }}>
-                    <Image className='object-contain' style={st.img}  source={img.img} />
+                  <View key={index} className='items-center justify-center' style={{ width: width }}>
+                    <Image className='object-contain' style={st.img} source={img.img} />
                   </View>
                 )
               })}
 
             </ScrollView>
-            <View className=' justify-center items-center flex-row' style={{ width: width }}>
+            <View className='flex-row items-center justify-center ' style={{ width: width }}>
               {/* {imgSliderHome.map((i, index) => {
                 return (<Text className='text-6xl font-thin'>-</Text>)
               })} */}
@@ -211,11 +232,11 @@ export default function HomeUser({ navigation }) {
 
           {/* <Text>{sliderI}</Text> */}
 
-          <View className=' bg- p-5 items-center'>
+          <View className='items-center p-5 bg-'>
 
             {/* iphone */}
             <View className='items-center justify-center mt-5' style={{ width: width * 0.9, height: height * 0.5 }}>
-              <Text className='text-2xl font-medium mb-5'>iPhone</Text>
+              <Text className='mb-5 text-2xl font-medium'>iPhone</Text>
               <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
                 <ScrollView
                   showsHorizontalScrollIndicator={false}
@@ -234,7 +255,7 @@ export default function HomeUser({ navigation }) {
 
             {/* iPad */}
             <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
-              <Text className='text-2xl font-medium mb-5'>iPad</Text>
+              <Text className='mb-5 text-2xl font-medium'>iPad</Text>
               <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
                 <ScrollView
                   showsHorizontalScrollIndicator={false}
@@ -253,7 +274,7 @@ export default function HomeUser({ navigation }) {
 
             {/* Macbook */}
             <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
-              <Text className='text-2xl font-medium mb-5'>Macbook</Text>
+              <Text className='mb-5 text-2xl font-medium'>Macbook</Text>
               <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
                 <ScrollView
                   showsHorizontalScrollIndicator={false}
