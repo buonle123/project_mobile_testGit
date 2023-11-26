@@ -122,8 +122,8 @@ export default function FavoriteProductsScreen({ navigation }) {
 
 
   return (
-    <View className='items-center flex-1 pt-5 bg-neutral-100 '>
-      <View style={{ height: height * 0.08, width: width }} className='flex-row items-center justify-center p-2 bg-slate-400'>
+    <View className='items-center flex-1 bg-neutral-100 '>
+      <View style={{ height: height * 0.1, width: width }} className='flex-row items-center justify-center p-2 bg-slate-400 '>
         <Text className='text-xl font-semibold text-center text-white'>favoriteProducts</Text>
       </View>
       <View className='items-center justify-start w-full h-auto bg-white' style={{ flex: 0.999 }}>

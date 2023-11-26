@@ -38,7 +38,7 @@ const AdminDrawer = () => {
                                         <Text style={styles.textBottomDrawer}>Log out</Text>
                                     </View>
                                 </TouchableOpacity>
-                            </View >
+                            </View>
                         </>
                     )
                 }
@@ -72,7 +72,7 @@ const AdminDrawer = () => {
                 drawerLabel: 'Manage Phone',
                 drawerIcon: ({ color, size }) => <Ionicons name='phone-portrait-outline' size={size} color={color} />
             }} component={StackPhoneList} />
-        </Drawer.Navigator >
+        </Drawer.Navigator>
     )
 }
 

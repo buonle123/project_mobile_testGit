@@ -8,7 +8,8 @@ import SettingUserScreen from "./UserScreen/SettingUserScreen"
 import ShoppingCartScreen from "./UserScreen/ShoppingCartScreen"
 import FavoriteProductsScreen from "./UserScreen/FavoriteProductsScreen"
 import ProductDetails from "./Product/ProductDetails"
-
+import EditPass from "./UserScreen/ProfileUser/EditPass"
+import EditUser from "./UserScreen/ProfileUser/EditUser"
 export {
     OnBoardingScreen,
     LoginScreen,
@@ -19,5 +20,8 @@ export {
     SettingUserScreen,
     ShoppingCartScreen,
     FavoriteProductsScreen,
-    ProductDetails
+    ProductDetails,
+    EditPass,
+    EditUser,
+    
 }

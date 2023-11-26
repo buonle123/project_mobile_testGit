@@ -2,6 +2,8 @@ import { View, Text, Dimensions, TouchableOpacity, StyleSheet, ScrollView, Image
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import React, { useState } from 'react'
 import ItemOrder from '../../components/ItemOrder';
+
+
 // import InputOrder from '../../components/InputOrder';
 // ItemOrder
 const { width, height } = Dimensions.get('window');
@@ -10,6 +12,11 @@ export default function OrderScreen({ route, navigation }) {
   const { productItem } = route.params;
 
   const [showipAddress, setShowipAddress] = useState(false);
+
+  const [address, setAddress] = useState('116 Nguyễn Huy Tưởng, Hòa Minh, Liên Chiểu, Đà Nẵng')
+  const [yName, setName] = useState('Nguyễn Văn Dũng')
+  const [email, setEmail] = useState('dung@123.com')
+  const [phone, setPhone] = useState('0346477714')
 
   const ShowAddress = () => {
     setShowipAddress(!showipAddress);
@@ -30,8 +37,23 @@ export default function OrderScreen({ route, navigation }) {
 
   // }
 
+  
+
   const placeAnOder = ()=>{
+
+
+    const cartItem = {
+      address: address,
+      yName: yName,
+      email: email,
+      phone: phone,
+      quantity: sl,
+      sumPrice: sl*productItem.priceNew,
+      time: new Date()
+    }
     
+    navigation.navigate('ShoppingCart', {cartItem: cartItem}, {popTo: 'HomeUserSC'});
+
   }
 
 
@@ -49,10 +71,10 @@ export default function OrderScreen({ route, navigation }) {
       <View className='items-center h-full py-5' style={{ height: height * 0.83 }}>
         <View style={{ width: width }} className='items-center'>
           <ScrollView className='h-full ' style={{ width: width * 0.9 }}>
-            <ItemOrder icon={<Ionicon name='location-outline' size={25} color={' rgb(234 88 12)'} />} title={'Địa chỉ nhận hàng: '} data={'116 Nguyễn Huy Tưởng, Hòa Minh, Liên Chiểu, Đà Nẵng'} />
-            <ItemOrder icon={<Ionicon name='person-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your name:'} data={'Nguyễn Văn Dũng'} lable={'New Name'} />
-            <ItemOrder icon={<Ionicon name='at-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your email address:'} data={'dung@123.com'} lable={'New mail'} />
-            <ItemOrder icon={<Ionicon name='call-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your phone number:'} data={'0346477714'} lable={'New phone number'} />
+            <ItemOrder icon={<Ionicon name='location-outline' size={25} color={' rgb(234 88 12)'} />} title={'Địa chỉ nhận hàng: '} data={address} setData={setAddress}/>
+            <ItemOrder icon={<Ionicon name='person-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your name:'} data={yName} lable={'New Name'} setData={setName}/>
+            <ItemOrder icon={<Ionicon name='at-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your email address:'} data={email} lable={'New mail'} setData={setEmail}/>
+            <ItemOrder icon={<Ionicon name='call-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your phone number:'} data={phone} lable={'New phone number'} setData={setPhone}/>
 
 
             <View className='flex-row items-center w-full h-32 px-2 py-4 mt-5 rounded-xl' style={[st.shadow, st.container]}>

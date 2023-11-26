@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
 
-const ItemOrder = ({icon, data, title, lable}) => {
+const ItemOrder = ({icon, data, title, lable, setData}) => {
     const [showipAddress, setShowipAddress] = useState(false);
 
     const ShowAddress = () => {
@@ -26,7 +26,7 @@ const ItemOrder = ({icon, data, title, lable}) => {
             </View>
             <View className='w-5/6'>
                 {showipAddress && (
-                    <InputOrder label={lable} />
+                    <InputOrder label={lable} valu={data} onchange={setData}/>
                 )}
             </View>
         </View>

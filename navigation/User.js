@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -7,17 +7,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { HomeUser, SettingUserScreen, ShoppingCartScreen, FavoriteProductsScreen } from '../screens';
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import HomeUserStack from './HomeUserStack';
-
+import UserDrawer from './UserDrawer';
 export default function User() {
+
     const UserStack = createBottomTabNavigator();
     const size = 30;
+    const {width, height} = Dimensions.get('window')
     return (
         <UserStack.Navigator screenOptions={({ route }) => ({
             headerShown: false,
             tabBarShowLabel: false,
             tabBarStyle:{
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                height: height*0.07,
+                
             },
             tabBarIcon: ({ focused, color }) => {
                 if(route.name === 'HomeUserStack'){
@@ -30,8 +34,8 @@ export default function User() {
                 } else if(route.name === 'SettingUser'){
                     return (
                         <View style={[st.container, {backgroundColor: focused ? '#f2f2f2' : 'white',} ]}>
-                            <Ionicon name='settings-outline' size={size} color={focused ? 'coral' : '#676767'}/>
-                            {focused && <Text style={st.text}>Setting</Text>}
+                            <Ionicon name='person-outline' size={size} color={focused ? 'coral' : '#676767'}/>
+                            {focused && <Text style={st.text}>User</Text>}
                         </View>
                     )
                 } else if(route.name === 'ShoppingCart'){
@@ -63,7 +67,7 @@ export default function User() {
             <UserStack.Screen name='HomeUserStack' component={HomeUserStack} />
             <UserStack.Screen name='FavoriteProducts' component={FavoriteProductsScreen} />
             <UserStack.Screen name='ShoppingCart' component={ShoppingCartScreen} />
-            <UserStack.Screen name='SettingUser' component={SettingUserScreen} />
+            <UserStack.Screen name='SettingUser' component={UserDrawer} />
         </UserStack.Navigator>
     )
 }

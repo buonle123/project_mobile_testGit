@@ -6,7 +6,7 @@ const InputOrder = ({ label, icon, inputType, keyBoardType, fieldButtonLabel, fi
     return (
         <View style={styles.inputContainer}>
             
-                <TextInput placeholder={label} keyboardType={keyBoardType} style={styles.textInput} onChangeText={onchange}/>
+                <TextInput placeholder={label} keyboardType={keyBoardType} style={styles.textInput} onChangeText={onchange} value={valu}/>
             
         </View>
     )
