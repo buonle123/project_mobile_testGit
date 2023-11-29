@@ -1,5 +1,3 @@
 import AuthStack from "./AuthStack";
 
-export {
-    AuthStack
-}
+export { AuthStack };

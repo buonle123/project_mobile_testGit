@@ -1,21 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { AuthStack } from './navigation/index'
-import { FavoriteProductsProvider } from './context/context';
-import PhoneContextProvider from './store/phone-context';
+import { FavoriteProductsProvider } from "./context/context";
+import PhoneContextProvider from "./store/phone-context";
+import AuthContextProvider from "./store/auth-context";
+import Navigation from "./navigation/AuthStack";
 
 export default function App() {
   return (
-    <PhoneContextProvider>
-      <FavoriteProductsProvider>
-        <NavigationContainer>
-          <AuthStack />
-        </NavigationContainer>
-      </FavoriteProductsProvider>
-    </PhoneContextProvider>
+    <AuthContextProvider>
+      <PhoneContextProvider>
+        <FavoriteProductsProvider>
+          <Navigation />
+        </FavoriteProductsProvider>
+      </PhoneContextProvider>
+    </AuthContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-
-});
