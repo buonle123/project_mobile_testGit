@@ -166,10 +166,20 @@ export default function HomeUser({ navigation }) {
   };
 
   return (
-    <View className='flex-1 mt-5'>
-      <View style={{ flex: 0.1 }} className='flex-row items-center justify-between p-2 bg-slate-200'>
-        <TouchableOpacity className='items-center justify-center w-10 h-10 rounded-xl bg-slate-400 ' style={[st.shadowHeader]} onPress={() => { logOut() }}>
-          <Text style={{ fontSize: 20 }} transform={[{ rotate: "180deg" },]}>{<MaterialIcons name='logout' size={20} color={'white'} />}</Text>
+    <View className="flex-1 mt-5">
+      <View
+        style={{ flex: 0.08 }}
+        className="flex-row items-center justify-between p-2 bg-slate-200"
+      >
+        <TouchableOpacity
+          className="items-center justify-center w-10 h-10 rounded-xl bg-slate-400 "
+          onPress={() => {
+            logOut();
+          }}
+        >
+          <Text style={{ fontSize: 20 }} transform={[{ rotate: "180deg" }]}>
+            {<MaterialIcons name="logout" size={20} color={"white"} />}
+          </Text>
         </TouchableOpacity>
 
         <View className="flex-row items-center justify-center h-full w-72">
