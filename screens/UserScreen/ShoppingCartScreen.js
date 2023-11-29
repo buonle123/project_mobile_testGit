@@ -24,7 +24,7 @@ export default function ShoppingCartScreen() {
         </View>
         <View className='h-4/5 w-11/12 mx-auto rounded-xl' style={[]}>
           <ScrollView>
-            <ItemCart/>
+            <ItemCart />
           </ScrollView>
         </View>
       </View>
@@ -37,6 +37,6 @@ export default function ShoppingCartScreen() {
 
 const st = StyleSheet.create({
   shadow: {
-    shadowColor: 'rgb(115, 115, 115)', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.4, shadowRadius: 5, 
+    shadowColor: 'rgb(115, 115, 115)', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.4, shadowRadius: 5,
   }
 })

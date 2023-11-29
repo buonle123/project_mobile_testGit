@@ -12,9 +12,15 @@ const { width, height } = Dimensions.get('window');
 
 export default function HomeUser({ navigation }) {
 
+
   const [search, setSearch] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
   const updateSeach = (vl) => {
     setSearch(vl);
+    // console.log(vl);
+    if (vl.trim() == '') {
+      setShowSearch(false);
+    } else { setShowSearch(true) }
   }
 
   const scrollProduct = useRef();
@@ -118,7 +124,7 @@ export default function HomeUser({ navigation }) {
           style: 'cancel',
         },
         {
-          text: 'OK', onPress: () => navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }],})
+          text: 'OK', onPress: () => navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }], })
         },
       ],
       { cancelable: false }
@@ -150,6 +156,10 @@ export default function HomeUser({ navigation }) {
       </TouchableOpacity>
     )
   }
+
+
+
+
 
 
 
@@ -223,73 +233,117 @@ export default function HomeUser({ navigation }) {
 
             </ScrollView>
             <View className='flex-row items-center justify-center ' style={{ width: width }}>
-              {/* {imgSliderHome.map((i, index) => {
-                return (<Text className='text-6xl font-thin'>-</Text>)
-              })} */}
               {dots}
             </View>
           </View>
 
-          {/* <Text>{sliderI}</Text> */}
 
           <View className='items-center p-5 bg-'>
 
-            {/* iphone */}
-            <View className='items-center justify-center mt-5' style={{ width: width * 0.9, height: height * 0.5 }}>
-              <Text className='mb-5 text-2xl font-medium'>iPhone</Text>
-              <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-                  pagingEnabled
-                  horizontal
-                  className='h-52'
+            {showSearch ? (
+              <>
+                <View className='items-center justify- mt-5' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <View className='w-full flex-row items-center'>
+                    <Text className='text-base'>Từ khóa: "{search}" </Text>
+                    <TouchableOpacity className='bg-black ml-2 rounded-full' onPress={() => { setShowSearch(false); setSearch('') }}>
+                      <Ionicon name='close' color={'white'} size={14} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className='mt-5'>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
 
-                >
-                  {/* product */}
-                  {dataProduct.map((item, i) => {
-                    return Product(item, i)
-                  })}
-                </ScrollView>
-              </View>
-            </View>
+                    >
+                      {(() => {
+                        const filteredProducts = dataProduct.filter((item) =>
+                          item.title.toLowerCase().includes(search.toLowerCase())
+                        );
 
-            {/* iPad */}
-            <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
-              <Text className='mb-5 text-2xl font-medium'>iPad</Text>
-              <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-                  pagingEnabled
-                  horizontal
-                  className='h-52'
+                        // Kiểm tra xem có sản phẩm nào thỏa mãn hay không
+                        if (filteredProducts.length === 0) {
+                          return (
+                            <View className='w-full items-center'>
+                              <Text className='text-center'>Không tìm thấy sản phẩm!!</Text>
+                            </View>
+                          )
+                        }
 
-                >
-                  {/* product */}
-                  {dataProduct.map((item, i) => {
-                    return Product(item, i)
-                  })}
-                </ScrollView>
-              </View>
-            </View>
+                        // Trả về mảng sản phẩm thỏa mãn điều kiện
+                        return filteredProducts.map((item, i) => Product(item, i));
+                      })()}
+                    </ScrollView>
+                  </View>
+                </View>
+              </>
+            ) : (
+              <>
+                {/* iphone */}
+                <View className='items-center justify-center mt-5' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <Text className='mb-5 text-2xl font-medium'>iPhone</Text>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
 
-            {/* Macbook */}
-            <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
-              <Text className='mb-5 text-2xl font-medium'>Macbook</Text>
-              <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-                  pagingEnabled
-                  horizontal
-                  className='h-52'
+                    >
+                      {/* product */}
+                      {dataProduct.map((item, i) => {
+                        if (item.typeProduct == 'iphone') {
+                          return Product(item, i)
+                        }
+                      })}
+                    </ScrollView>
+                  </View>
+                </View>
 
-                >
-                  {/* product */}
-                  {dataProduct.map((item, i) => {
-                    return Product(item, i)
-                  })}
-                </ScrollView>
-              </View>
-            </View>
+                {/* iPad */}
+                <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <Text className='mb-5 text-2xl font-medium'>iPad</Text>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
+
+                    >
+                      {/* product */}
+                      {dataProduct.map((item, i) => {
+                        if (item.typeProduct == 'iPad') {
+                          return Product(item, i)
+                        }
+                      })}
+                    </ScrollView>
+                  </View>
+                </View>
+
+                {/* Macbook */}
+                <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <Text className='mb-5 text-2xl font-medium'>Macbook</Text>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
+
+                    >
+                      {/* product */}
+                      {dataProduct.map((item, i) => {
+                        if (item.typeProduct == 'macbook') {
+                          return Product(item, i)
+                        }
+                      })}
+                    </ScrollView>
+                  </View>
+                </View>
+              </>
+            )}
           </View>
         </ScrollView>
       </View>
