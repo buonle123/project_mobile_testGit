@@ -16,8 +16,8 @@ const Stack = createStackNavigator();
 function AuthStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Admin" component={AdminTab} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="Admin" component={AdminTab} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
       <Stack.Screen name="ForgetScreen" component={ForgetScreen} />
@@ -44,7 +44,8 @@ export default function Navigation() {
   const authContext = useContext(AuthContext);
   return (
     <NavigationContainer>
-      {authContext.isAuthenticated ? <UserStack /> : <AuthStack />}
+      {/* {authContext.isAuthenticated ? <UserStack /> : <AuthStack />} */}
+      {true ? <UserStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

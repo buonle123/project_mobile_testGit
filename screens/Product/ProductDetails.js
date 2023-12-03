@@ -9,12 +9,17 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Ionicon from "react-native-vector-icons/Ionicons";
-import { useFavoriteProducts } from "../../context/context";
+import { CartProduct, useFavoriteProducts } from "../../context/context";
 // import { dataFavorite } from '../../data/data';
 
 const { width, height } = Dimensions.get("window");
 
 export default function ProductDetails({ route, navigation }) {
+
+  const { cart, setCart } = CartProduct();
+
+
+
   const { productItem } = route.params;
   let priceNew = productItem.priceNew.toLocaleString("en-US");
   let priceOld = productItem.priceOld.toLocaleString("en-US");
@@ -26,7 +31,7 @@ export default function ProductDetails({ route, navigation }) {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
-  const targetDate = new Date("2023-11-30T00:00:00").getTime();
+  const targetDate = new Date("2023-12-10T00:00:00").getTime();
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -93,6 +98,54 @@ export default function ProductDetails({ route, navigation }) {
 
   // console.log(favoriteProducts.length);
 
+  const checkCart = () => {
+    let c = -1;
+    if (cart.length == 0) return -1;
+    else {
+      c = cart.findIndex(item => {
+        return item.product.title == productItem.title;
+      })
+    }
+    return c;
+  }
+  const idCheckCart = checkCart();
+
+
+  const [buttonText, setButtonText] = useState(idCheckCart != -1);
+
+
+  const addCart = () => {
+    let c = checkCart();
+    let idIT = 0;
+    
+    if(cart.length > 0){
+      idIT = (cart[cart.length-1].id+1)
+    }
+    const itemCart = {
+      product: productItem,
+      check: false,
+      quantity: 1,
+      id: idIT
+    }
+
+    setCart((l)=>{
+      if(cart.length == 0){
+        return [itemCart]
+      } else{
+        if(!buttonText){
+          return [...l, itemCart]
+        } else{
+          const updateCart = cart.filter(item=>{
+            return item.product.title != productItem.title;
+          })
+          return updateCart;
+        }
+      }
+    })
+    setButtonText(!buttonText);
+    console.log(cart.length);
+  }
+
   return (
     <View className="items-center flex-1 pt-5 bg-neutral-100">
       <View
@@ -116,7 +169,7 @@ export default function ProductDetails({ route, navigation }) {
         </View>
       </View>
 
-      <View style={{ height: height * 0.75 }}>
+      <View style={{ height: height * 0.7 }}>
         <ScrollView>
           <View style={st.imgProduct}>
             <ScrollView
@@ -252,14 +305,15 @@ export default function ProductDetails({ route, navigation }) {
         className="items-center "
       >
         <TouchableOpacity
-          className="bg-orange-400 h-14 rounded-xl"
+          className="bg-orange-400 h-full rounded-xl mt-4"
           style={{ width: width * 0.98 }}
           onPress={() => {
-            navigation.navigate("OrderScreen", { productItem: productItem });
+            addCart()
+            // navigation.navigate("OrderScreen", { productItem: productItem });
           }}
         >
           <Text className="my-auto text-xl font-medium text-center text-white">
-            Đặt hàng ngay
+            {buttonText ? "Xóa khỏi giỏ hàng" : "Thêm vào giỏ hàng"}
           </Text>
         </TouchableOpacity>
       </View>

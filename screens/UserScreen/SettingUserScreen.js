@@ -8,7 +8,7 @@ export default function SettingUserScreen() {
   return (
     <View style={[st.container]} className='bg-white'>
       <View style={st.headerDrawer} className='items-center mt-5'>
-        <Image className='w-40 h-40 rounded-full border border-gray-300' style={[st.shadow]} transform={[{ rotate: "0deg" },]} source={require('../../assets/images/imgOnBoarding/Enjoy.png')} />
+        <Image className='w-40 h-40 ' style={[st.shadow, {}]} transform={[{ rotate: "0deg" },]} source={require('../../assets/images/imgOnBoarding/Enjoy.png')} />
         <Text className='my-2 text-base font-semibold'>Hello Nguyễn Văn Dũng!</Text>
       </View>
 
@@ -28,6 +28,7 @@ export default function SettingUserScreen() {
           </View>
 
         </ScrollView>
+        
       </View>
     </View>
   )

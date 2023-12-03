@@ -9,7 +9,7 @@ import ItemOrder from '../../components/ItemOrder';
 const { width, height } = Dimensions.get('window');
 
 export default function OrderScreen({ route, navigation }) {
-  const { productItem } = route.params;
+  const { cartItem } = route.params;
 
   const [showipAddress, setShowipAddress] = useState(false);
 
@@ -26,11 +26,7 @@ export default function OrderScreen({ route, navigation }) {
   const [sl, setSL] = useState(1)
 
   const updateSL = (vl) => {
-    console.log(productItem.quantity);
-    if (sl == 1 && vl == -1) return;
-
-    if (sl >= productItem.quantity && vl == 1) return;
-    setSL(sl + vl);
+    
   }
 
   // const input = (place) =>{
@@ -48,13 +44,14 @@ export default function OrderScreen({ route, navigation }) {
       email: email,
       phone: phone,
       quantity: sl,
-      sumPrice: sl*productItem.priceNew,
+      // sumPrice: sl*cartItem.cart[0].product.priceNew,
       time: new Date()
     }
     
     navigation.navigate('ShoppingCart', {cartItem: cartItem}, {popTo: 'HomeUserSC'});
 
   }
+  console.log(cartItem);
 
 
 
@@ -77,12 +74,12 @@ export default function OrderScreen({ route, navigation }) {
             <ItemOrder icon={<Ionicon name='call-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your phone number:'} data={phone} lable={'New phone number'} setData={setPhone}/>
 
 
-            <View className='flex-row items-center w-full h-32 px-2 py-4 mt-5 rounded-xl' style={[st.shadow, st.container]}>
+            {/* <View className='flex-row items-center w-full h-32 px-2 py-4 mt-5 rounded-xl' style={[st.shadow, st.container]}>
               <View>
-                <Image className='w-24 h-24' source={productItem.img[0]} />
+                <Image className='w-24 h-24' source={cartItem.cart[0].product.img[0]} />
               </View>
               <View className='justify-around h-24'>
-                <Text className='text-lg'>{productItem.title}</Text>
+                <Text className='text-lg'>{cartItem.cart[0].product.title}</Text>
                 <View className='flex-row items-center justify-center rounded-lg bg-slate-300'>
                   <TouchableOpacity onPress={() => { updateSL(-1) }}>
                     <Ionicon name='remove' size={20} />
@@ -94,10 +91,10 @@ export default function OrderScreen({ route, navigation }) {
 
                 </View>
               </View>
-            </View>
+            </View> */}
 
             <TouchableOpacity className='mt-10 bg-orange-400 h-14 rounded-xl' onPress={()=>{placeAnOder()}}>
-              <Text className='my-auto text-xl font-medium text-center text-white'>Tổng đơn: {(productItem.priceNew*sl).toLocaleString('en-US')}₫</Text>
+              <Text className='my-auto text-xl font-medium text-center text-white'>Tổng đơn: {(20000).toLocaleString('en-US')}₫</Text>
             </TouchableOpacity>
 
           </ScrollView>

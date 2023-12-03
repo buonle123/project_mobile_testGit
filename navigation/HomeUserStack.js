@@ -1,9 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { HomeUser, ProductDetails } from '../screens'
-import OrderScreen from '../screens/Product/OrderScreen';
-
-
+import { HomeUser, OrderScreen, ProductDetails } from '../screens'
 
 const stack = createStackNavigator();
 export default function HomeUserStack() {

@@ -20,11 +20,17 @@ import { AuthContext } from "../../store/auth-context";
 const { width, height } = Dimensions.get("window");
 
 export default function HomeUser({ navigation }) {
-  const authContext = useContext(AuthContext);
-  const [search, setSearch] = useState("");
+
+
+  const [search, setSearch] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
   const updateSeach = (vl) => {
     setSearch(vl);
-  };
+    // console.log(vl);
+    if (vl.trim() == '') {
+      setShowSearch(false);
+    } else { setShowSearch(true) }
+  }
 
   const scrollProduct = useRef();
 
@@ -65,12 +71,11 @@ export default function HomeUser({ navigation }) {
       onPress={() => dotClick(index)}
     >
       <Text
-        className={`text-6xl h-12 font-thin ${
-          indexSlide === i.id
-            ? "text-black font-extralight"
-            : "text-gray-300 font-thin"
-        }`}
-        onPressIn={() => {}}
+        className={`text-6xl h-12 font-thin ${indexSlide === i.id
+          ? "text-black font-extralight"
+          : "text-gray-300 font-thin"
+          }`}
+        onPressIn={() => { }}
       >
         -
       </Text>
@@ -117,8 +122,25 @@ export default function HomeUser({ navigation }) {
   };
 
   const logOut = () => {
-    authContext.logOut();
-  };
+    Alert.alert(
+      'LOG OUT',
+      'My Alert Msg',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK', onPress: () => navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }], })
+        },
+      ],
+      { cancelable: false }
+    );
+  }
+
+
+
 
   const Product = (item, index) => {
     let priceNew = item.priceNew.toLocaleString("en-US");
@@ -165,6 +187,10 @@ export default function HomeUser({ navigation }) {
     );
   };
 
+
+
+
+
   return (
     <View className="flex-1 mt-5">
       <View
@@ -210,15 +236,13 @@ export default function HomeUser({ navigation }) {
             return (
               <TouchableOpacity
                 key={id}
-                className={`mx-2 w-20 justify-center items-center rounded-xl ${
-                  id == activeId ? "bg-slate-300" : ""
-                }`}
+                className={`mx-2 w-20 justify-center items-center rounded-xl ${id == activeId ? "bg-slate-300" : ""
+                  }`}
                 onPress={() => setActiveTitle(id)}
               >
                 <Text
-                  className={`text-lg font-medium ${
-                    activeId == item.id ? "text-white" : "text-gray-700"
-                  }`}
+                  className={`text-lg font-medium ${activeId == item.id ? "text-white" : "text-gray-700"
+                    }`}
                 >
                   {item.title}
                 </Text>
@@ -248,116 +272,138 @@ export default function HomeUser({ navigation }) {
             className="items-center justify-center w-full "
             style={{ flex: 0.9 }}
           >
-            <ScrollView
-              onScroll={({ nativeEvent }) => onChange(nativeEvent)}
-              showsHorizontalScrollIndicator={false}
-              pagingEnabled
-              horizontal
-              className="bg-white "
-              ref={scrollRef}
-              scrollEventThrottle={32}
-            >
-              {imgSliderHome.map((img, index) => {
-                return (
-                  <View
-                    key={index}
-                    className="items-center justify-center"
-                    style={{ width: width }}
-                  >
-                    <Image
-                      className="object-contain"
-                      style={st.img}
-                      source={img.img}
-                    />
-                  </View>
-                );
-              })}
-            </ScrollView>
-            <View
-              className="flex-row items-center justify-center "
-              style={{ width: width }}
-            >
-              {/* {imgSliderHome.map((i, index) => {
-                return (<Text className='text-6xl font-thin'>-</Text>)
-              })} */}
-              {dots}
+            <View className='h-48'>
+              <ScrollView
+                onScroll={({ nativeEvent }) => onChange(nativeEvent)}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled
+                horizontal
+                className='bg-white '
+                ref={scrollRef}
+                scrollEventThrottle={32}
+              >
+                {imgSliderHome.map((img, index) => {
+                  return (
+                    <View key={index} className='items-center justify-center' style={{ width: width }}>
+                      <Image className='object-contain' style={st.img} source={img.img} />
+                    </View>
+                  )
+                })}
+
+              </ScrollView>
+              <View className='flex-row items-center justify-center ' style={{ width: width }}>
+                {dots}
+              </View>
             </View>
           </View>
 
-          {/* <Text>{sliderI}</Text> */}
 
-          <View className="items-center p-5 bg-">
-            {/* iphone */}
-            <View
-              className="items-center justify-center mt-5"
-              style={{ width: width * 0.9, height: height * 0.5 }}
-            >
-              <Text className="mb-5 text-2xl font-medium">iPhone</Text>
-              <View
-                style={{ width: width * 0.91, height: height * 0.5 }}
-                className=""
-              >
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-                  pagingEnabled
-                  horizontal
-                  className="h-52"
-                >
-                  {/* product */}
-                  {dataProduct.map((item, i) => {
-                    return Product(item, i);
-                  })}
-                </ScrollView>
-              </View>
-            </View>
+          <View className='items-center p-5 bg-'>
 
-            {/* iPad */}
-            <View
-              className="items-center justify-center mt-10"
-              style={{ width: width * 0.9, height: height * 0.5 }}
-            >
-              <Text className="mb-5 text-2xl font-medium">iPad</Text>
-              <View
-                style={{ width: width * 0.91, height: height * 0.5 }}
-                className=""
-              >
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-                  pagingEnabled
-                  horizontal
-                  className="h-52"
-                >
-                  {/* product */}
-                  {dataProduct.map((item, i) => {
-                    return Product(item, i);
-                  })}
-                </ScrollView>
-              </View>
-            </View>
+            {showSearch ? (
+              <>
+                <View className='items-center justify- mt-5' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <View className='w-full flex-row items-center'>
+                    <Text className='text-base'>Từ khóa: "{search}" </Text>
+                    <TouchableOpacity className='bg-black ml-2 rounded-full' onPress={() => { setShowSearch(false); setSearch('') }}>
+                      <Ionicon name='close' color={'white'} size={14} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className='mt-5'>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
 
-            {/* Macbook */}
-            <View
-              className="items-center justify-center mt-10"
-              style={{ width: width * 0.9, height: height * 0.5 }}
-            >
-              <Text className="mb-5 text-2xl font-medium">Macbook</Text>
-              <View
-                style={{ width: width * 0.91, height: height * 0.5 }}
-                className=""
-              >
-                <ScrollView
-                  showsHorizontalScrollIndicator={false}
-                  pagingEnabled
-                  horizontal
-                  className="h-52"
-                >
-                  {/* product */}
-                  {dataProduct.map((item, i) => {
-                    return Product(item, i);
-                  })}
-                </ScrollView>
-              </View>
-            </View>
+                    >
+                      {(() => {
+                        const filteredProducts = dataProduct.filter((item) =>
+                          item.title.toLowerCase().includes(search.toLowerCase())
+                        );
+
+                        // Kiểm tra xem có sản phẩm nào thỏa mãn hay không
+                        if (filteredProducts.length === 0) {
+                          return (
+                            <View className='w-full items-center'>
+                              <Text className='text-center'>Không tìm thấy sản phẩm!!</Text>
+                            </View>
+                          )
+                        }
+
+                        // Trả về mảng sản phẩm thỏa mãn điều kiện
+                        return filteredProducts.map((item, i) => Product(item, i));
+                      })()}
+                    </ScrollView>
+                  </View>
+                </View>
+              </>
+            ) : (
+              <>
+                {/* iphone */}
+                <View className='items-center justify-center mt-5' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <Text className='mb-5 text-2xl font-medium'>iPhone</Text>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
+
+                    >
+                      {/* product */}
+                      {dataProduct.map((item, i) => {
+                        if (item.typeProduct == 'iphone') {
+                          return Product(item, i)
+                        }
+                      })}
+                    </ScrollView>
+                  </View>
+                </View>
+
+                {/* iPad */}
+                <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <Text className='mb-5 text-2xl font-medium'>iPad</Text>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
+
+                    >
+                      {/* product */}
+                      {dataProduct.map((item, i) => {
+                        if (item.typeProduct == 'iPad') {
+                          return Product(item, i)
+                        }
+                      })}
+                    </ScrollView>
+                  </View>
+                </View>
+
+                {/* Macbook */}
+                <View className='items-center justify-center mt-10' style={{ width: width * 0.9, height: height * 0.5 }}>
+                  <Text className='mb-5 text-2xl font-medium'>Macbook</Text>
+                  <View style={{ width: width * 0.91, height: height * 0.5 }} className=''>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      pagingEnabled
+                      horizontal
+                      className='h-52'
+
+                    >
+                      {/* product */}
+                      {dataProduct.map((item, i) => {
+                        if (item.typeProduct == 'macbook') {
+                          return Product(item, i)
+                        }
+                      })}
+                    </ScrollView>
+                  </View>
+                </View>
+              </>
+            )}
           </View>
         </ScrollView>
       </View>
@@ -377,7 +423,6 @@ const st = StyleSheet.create({
   },
   img: {
     width: width,
-    height: height * 0.179,
-    objectFit: "contain",
+    height: "100%",
   },
 });

@@ -10,6 +10,8 @@ import FavoriteProductsScreen from "./UserScreen/FavoriteProductsScreen"
 import ProductDetails from "./Product/ProductDetails"
 import EditPass from "./UserScreen/ProfileUser/EditPass"
 import EditUser from "./UserScreen/ProfileUser/EditUser"
+import OrderScreen from "./Product/OrderScreen"
+import Buy from "./UserScreen/Buy"
 export {
     OnBoardingScreen,
     LoginScreen,
@@ -23,5 +25,6 @@ export {
     ProductDetails,
     EditPass,
     EditUser,
-    
+    OrderScreen,
+    Buy
 }

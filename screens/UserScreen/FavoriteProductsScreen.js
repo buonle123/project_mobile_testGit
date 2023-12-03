@@ -73,7 +73,7 @@ export default function FavoriteProductsScreen({ navigation }) {
       return (
         <TouchableOpacity key={index} className='my-2' onPress={() => { navigation.navigate('ProductDetails', { productItem: item }) }}>
           <View className='flex-row items-center justify-around w-full h-24 mx-auto bg-white rounded-2xl' style={st.shadow}>
-            <Image className='object-contain w-16 h-20' source={item.img[0]} />
+            <Image className='w-16 h-16' source={item.img[0]} />
             <View className='w-2/4'><Text>{item.title}</Text></View>
             <TouchableOpacity key={item.title} onPress={() => { deleteI(item.title) }}>
               <Ionicon name='trash' size={35} color={'rgb(300 31 100)'} />
@@ -122,14 +122,14 @@ export default function FavoriteProductsScreen({ navigation }) {
 
 
   return (
-    <View className='items-center flex-1 bg-neutral-100 '>
-      <View style={{ height: height * 0.1, width: width }} className='flex-row items-center justify-center p-2 bg-slate-400 '>
+    <View className='items-center flex-1 bg-neutral-400 '>
+      {/* <View style={{ height: height * 0.1, width: width }} className='flex-row items-center justify-center p-2 bg-slate-400 '>
         <Text className='text-xl font-semibold text-center text-white'>favoriteProducts</Text>
-      </View>
-      <View className='items-center justify-start w-full h-auto bg-white' style={{ flex: 0.999 }}>
+      </View> */}
+      <View className='items-center justify-start w-full h-auto bg-white' style={{ flex: 0.9999 }}>
         <View>
 
-          <View className='h-56 pt-10 bg-slate-200'>
+          <View className='h-56 pt-5 bg-slate-400'>
             <ScrollView
               onScroll={({ nativeEvent }) => onChange(nativeEvent)}
               showsHorizontalScrollIndicator={false}
@@ -154,7 +154,7 @@ export default function FavoriteProductsScreen({ navigation }) {
           </View>
 
           <View className='my-5 '>
-            <Text className='text-xl font-medium text-center'>Sản phẩm yêu thích</Text>
+            <Text className='text-xl font-medium text-center'>Favorite Product</Text>
             <View className='w-2/4 px-5 my-5'>
               <SelectList placeholder='Tất Cả' data={dataSL} setSelected={updateSelect} />
             </View>
@@ -178,8 +178,7 @@ export default function FavoriteProductsScreen({ navigation }) {
 const st = StyleSheet.create({
   img: {
     width: width,
-    height: height * 0.179,
-    objectFit: 'contain'
+    height: "100%"
   },
   shadow: {
 
