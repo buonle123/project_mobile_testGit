@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,16 +17,62 @@ import LoginSvg from "../assets/images/imgAuth/login.svg";
 import GoogleSvg from "../assets/images/imgAuth/google.svg";
 import FacebookSvg from "../assets/images/imgAuth/facebook.svg";
 import TwitterSvg from "../assets/images/imgAuth/twitter.svg";
-import { useUserAccounts } from "../context/context";
 import { login } from "../util/http";
 import OverLayLoading from "../components/UI/OverLayLoading";
 import { AuthContext } from "../store/auth-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const LoginScreen = ({ navigation }) => {
   const [inputs, setInputs] = useState({
     email: { value: "", isValid: true },
     pass: { value: "", isValid: true },
   });
+
+  const [isRemember, setIsRemember] = useState(false);
+  const [savedLogin, setSavedLogin] = useState(false);
+
+  async function getDataAsyncCheckBox() {
+    try {
+      const asyncRemember = await AsyncStorage.getItem("saveRemember");
+      const asyncLogin = await AsyncStorage.getItem("saveLogin");
+      setIsRemember(asyncRemember === "true");
+      setSavedLogin(asyncRemember === "true");
+    } catch (error) {
+      console.error("Error retrieving data from AsyncStorage:", error);
+    }
+  }
+
   const authContext = useContext(AuthContext);
+
+  const toggleRememberMe = () => {
+    setIsRemember((prevIsRemember) => !prevIsRemember);
+  };
+  useEffect(() => {
+    getDataAsyncCheckBox();
+  }, [navigation]);
+  useEffect(() => {
+    if (isRemember && savedLogin) {
+      getEmailAndPasswordData();
+    }
+  }, [isRemember, savedLogin, navigation]);
+  function setEmailAndPasswordData(email, pass) {
+    AsyncStorage.setItem("emailData", email);
+    AsyncStorage.setItem("passData", pass);
+    AsyncStorage.setItem("saveRemember", isRemember.toString());
+    AsyncStorage.setItem("saveLogin", isRemember.toString());
+    setSavedLogin(true);
+  }
+  async function getEmailAndPasswordData() {
+    const emailData = await AsyncStorage.getItem("emailData");
+    const passData = await AsyncStorage.getItem("passData");
+    if (emailData && passData) {
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        email: { value: emailData, isValid: true },
+        pass: { value: passData, isValid: true },
+      }));
+      setSavedLogin(true);
+    }
+  }
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   function changeInputHandler(entered, input) {
     setInputs((prevInput) => ({
@@ -38,33 +84,47 @@ const LoginScreen = ({ navigation }) => {
     setIsAuthenticating(true);
     try {
       const token = await login(email, pass);
+      AsyncStorage.setItem("KeepLogged", JSON.stringify(token));
+      if (isRemember) {
+        setEmailAndPasswordData(email, pass);
+      } else {
+        AsyncStorage.setItem("saveRemember", "false");
+        AsyncStorage.setItem("saveLogin", "false");
+      }
       authContext.authenticate(token);
     } catch (error) {
       Alert.alert("Authentication failed", "haha");
     }
     setIsAuthenticating(false);
   }
-  function SubmitLoginHandler() {
+  async function SubmitLoginHandler() {
     const isValiEmail =
-      inputs.email.value.length > 0 && inputs.email.value.match(/\S+@\S+\.\S+/);
-    const isValiPass = inputs.pass.value.length > 5;
+      inputs.email &&
+      inputs.email.value !== undefined &&
+      inputs.email.value.length > 0 &&
+      inputs.email.value.match(/\S+@\S+\.\S+/) !== null;
+    const isValiPass =
+      inputs.pass &&
+      inputs.pass.value !== undefined &&
+      inputs.pass.value.length > 5;
     if (!isValiEmail || !isValiPass) {
       setInputs((prevInput) => ({
         ...prevInput,
         email: {
-          value: inputs.email.value,
+          value: inputs.email ? inputs.email.value : "",
           isValid: isValiEmail,
         },
         pass: {
-          value: inputs.pass.value,
+          value: inputs.pass ? inputs.pass.value : "",
           isValid: isValiPass,
         },
       }));
-      return;
     }
-    signInHandler(inputs.email.value, inputs.pass.value);
-    if (authContext.isAuthenticated) {
-      navigation.navigate("HomeScreen");
+    if (isValiEmail && isValiPass) {
+      await signInHandler(inputs.email.value, inputs.pass.value);
+      if (authContext.isAuthenticated) {
+        navigation.navigate("HomeScreen");
+      }
     }
   }
   if (isAuthenticating) {
@@ -119,6 +179,20 @@ const LoginScreen = ({ navigation }) => {
           fieldButtonLabel={"Forget?"}
           fieldButtonFunction={() => navigation.navigate("ForgetScreen")}
         />
+        <View style={styles.checkboxContainer}>
+          <TouchableOpacity onPress={toggleRememberMe} style={styles.checkbox}>
+            {isRemember ? (
+              <Ionicons
+                name="checkbox-outline"
+                size={20}
+                color={COLORS.primary}
+              />
+            ) : (
+              <Ionicons name="square-outline" size={20} color="#666" />
+            )}
+            <Text style={styles.checkboxLabel}>Remember Me</Text>
+          </TouchableOpacity>
+        </View>
         <CustomButtonAuth label={"Login"} onPress={SubmitLoginHandler} />
         <Text style={styles.textLoginWith}>Or, login with...</Text>
         <View style={styles.containerLoginMedia}>
@@ -178,6 +252,19 @@ const styles = StyleSheet.create({
   textRegister: {
     color: COLORS.primary,
     fontWeight: "700",
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  checkbox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkboxLabel: {
+    marginLeft: 10,
+    fontSize: 16,
   },
 });
 

@@ -15,6 +15,7 @@ function AuthContextProvider({ children }) {
   }
   function logOut() {
     setAuthToken(null);
+    
   }
   const value = {
     token: authToken,
