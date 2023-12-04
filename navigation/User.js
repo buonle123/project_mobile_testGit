@@ -79,8 +79,8 @@ const st = StyleSheet.create({
         justifyContent: 'center', 
         alignItems:'center', 
         borderRadius: 20,
-        width: 95,
-        height: 40
+        width: "90%",
+        height: "80%"
         
     },
     text:{
