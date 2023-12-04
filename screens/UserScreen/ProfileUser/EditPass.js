@@ -37,7 +37,7 @@ const EditPass = () => {
                     <InputEditPass vlue={pass} setVL={updatePass} placeholder={'Please enter pass'}/>
                     <InputEditPass vlue={rPass} setVL={updateRPass} placeholder={'Please enter re-pass'}/>
 
-                    <View className='w-3/4 h-12 mx-auto rounded-lg mt-24' style={[st.shadow, {backgroundColor:'rgba(242, 242, 242, 0.8)'}]}>
+                    <View className='w-3/4 h-12 mx-auto mt-24 rounded-lg' style={[st.shadow, {backgroundColor:'rgba(242, 242, 242, 0.8)'}]}>
                         <TouchableOpacity className='w-full h-full'>
                             <Text className='m-auto text-lg font-semibold'>SAVE</Text>
                         </TouchableOpacity>

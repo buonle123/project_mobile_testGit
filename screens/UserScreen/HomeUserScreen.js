@@ -16,12 +16,15 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 // import { Product } from '../../components/style';
 import { dataProduct, imgSliderHome } from "../../data/data";
 import { AuthContext } from "../../store/auth-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import OverLayLoading from "../../components/UI/OverLayLoading";
 
 const { width, height } = Dimensions.get("window");
 
 export default function HomeUser({ navigation }) {
   const authContext = useContext(AuthContext);
   const [search, setSearch] = useState("");
+  const [isLoging, setIsLoging] = useState(false);
   const updateSeach = (vl) => {
     setSearch(vl);
   };
@@ -116,9 +119,15 @@ export default function HomeUser({ navigation }) {
     }
   };
 
-  const logOut = () => {
+  const logOut = async () => {
+    setIsLoging(true);
     authContext.logOut();
+    await AsyncStorage.setItem("KeepLogged", "");
+    setIsLoging(false);
   };
+  if (isLoging) {
+    return <OverLayLoading />;
+  }
 
   const Product = (item, index) => {
     let priceNew = item.priceNew.toLocaleString("en-US");
