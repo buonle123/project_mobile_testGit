@@ -1,10 +1,11 @@
 import React from 'react'
 import { DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer'
-import { Ionicons } from '@expo/vector-icons'
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, Dimensions } from 'react-native'
 import StackPhoneList from './StackPhoneList'
-import { SettingUserScreen, EditPass, EditUser } from '../screens'
-
+import { SettingUserScreen, EditPass, EditUser, Buy } from '../screens'
+import TopTabNavigation from './TopTabNavigation';
 const Drawer = createDrawerNavigator()
 
 const { width, height } = Dimensions.get('window')
@@ -65,7 +66,8 @@ const UserDrawer = ({ navigation }) => {
                 headerTintColor: 'black',
                 headerTitleStyle: { fontWeight: 'bold' },
                 drawerActiveTintColor: 'red',
-                drawerLabelStyle: { color: '#111', marginLeft: -15 }
+                drawerLabelStyle: { color: '#111', marginLeft: -15 },
+                headerShown: false
             }}>
             <Drawer.Screen name="Home" options={{
                 drawerLabel: 'Home',
@@ -82,6 +84,15 @@ const UserDrawer = ({ navigation }) => {
                 title: 'Edit Pass',
                 drawerIcon: ({ color, size }) => <Ionicons name='key-outline' size={size} color={color} />
             }} component={EditPass} />
+            <Drawer.Screen
+                name='Buy' options={{
+                    drawerLabel: 'Buy',
+                    title: 'Buy',
+                    drawerIcon: ({color, size}) => <Ionicons name='reader-outline' size={size} color={color}/>
+                }}
+                component={TopTabNavigation}
+            />
+
 
         </Drawer.Navigator>
     )
@@ -89,7 +100,7 @@ const UserDrawer = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     headerDrawer: {
-        height: 225,
+        height: 225, 
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',

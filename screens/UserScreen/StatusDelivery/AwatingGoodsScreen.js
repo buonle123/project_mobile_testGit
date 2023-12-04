@@ -4,7 +4,6 @@ import React from 'react'
 const AwatingGoods = () => {
   return (
     <View>
-      <Text>AwatingGoods</Text>
     </View>
   )
 }

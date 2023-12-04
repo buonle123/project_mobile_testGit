@@ -4,7 +4,6 @@ import React from 'react'
 const AwaitingConFirm = () => {
   return (
     <View>
-      <Text>AwaitingConFirm</Text>
     </View>
   )
 }

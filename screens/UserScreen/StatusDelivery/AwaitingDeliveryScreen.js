@@ -4,7 +4,6 @@ import React from 'react'
 const AwaitingDelivery = () => {
   return (
     <View>
-      <Text>AwaitingDelivery</Text>
     </View>
   )
 }

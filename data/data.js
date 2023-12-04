@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 
 
-const ip1 = require('../assets/images/product/iphone-14-pro-max-128gb.png'), ip2 = require('../assets/images/product/iphone-15-pro-max-256gb_260.png'), ip4 = require('../assets/images/product/0000594_ipad-air-4_240.png'), ip5 = require('../assets/images/product/0006205_ipad-gen-9-102-inch-wifi-64gb_240.png'), ip6 = require('../assets/images/product/0010883_ipad-pro-m1-129-inch-wifi-cellular-512gb_240.png')
+const ip1 = require('../assets/images/product/iphone-14-pro-max-128gb.png'), ip2 = require('../assets/images/product/iphone-15-pro-max-256gb_260.png'), ip4 = require('../assets/images/product/0000594_ipad-air-4_240.png'), ip5 = require('../assets/images/product/0006205_ipad-gen-9-102-inch-wifi-64gb_240.png'), ip6 = require('../assets/images/product/0010883_ipad-pro-m1-129-inch-wifi-cellular-512gb_240.png'), ip7 = require('../assets/images/product/mac1.png'), ip8 = require('../assets/images/product/mac2.png');
 
 const dataProduct = [
     {
@@ -69,6 +69,34 @@ const dataProduct = [
         productInfo: '',
         typeProduct: 'iPad'
     },
+    {
+        img: [ip7],
+        title: 'MacBook Air 13 inch M2',
+        priceNew: 26550000,
+        priceOld: 34990000,
+        quantity: 9,
+        productInfo: 'Không chỉ khơi gợi cảm hứng qua việc cách tân thiết kế, MacBook Air M2 2022 còn chứa đựng nguồn sức mạnh lớn lao với chip M2 siêu mạnh, thời lượng pin chạm  ngưỡng 18 giờ, màn hình Liquid Retina tuyệt đẹp và hệ thống camera kết hợp cùng âm thanh tân tiến.',
+        typeProduct: 'macbook'
+    },
+    {
+        img: [ip8],
+        title: 'MacBook Air 15 inch M2 2023',
+        priceNew: 30990000,
+        priceOld: 34990000,
+        quantity: 5,
+        productInfo: 'Không chỉ khơi gợi cảm hứng qua việc cách tân thiết kế, MacBook Air M2 2022 còn chứa đựng nguồn sức mạnh lớn lao với chip M2 siêu mạnh, thời lượng pin chạm  ngưỡng 18 giờ, màn hình Liquid Retina tuyệt đẹp và hệ thống camera kết hợp cùng âm thanh tân tiến.',
+        typeProduct: 'macbook'
+    },
+    {
+        img: [ip7, ip7, ip7],
+        title: 'MacBook Air 13 inch M2',
+        priceNew: 26550000,
+        priceOld: 34990000,
+        quantity: 5,
+        productInfo: 'Không chỉ khơi gợi cảm hứng qua việc cách tân thiết kế, MacBook Air M2 2022 còn chứa đựng nguồn sức mạnh lớn lao với chip M2 siêu mạnh, thời lượng pin chạm  ngưỡng 18 giờ, màn hình Liquid Retina tuyệt đẹp và hệ thống camera kết hợp cùng âm thanh tân tiến.',
+        typeProduct: 'macbook'
+    },
+    
 ]
 
 

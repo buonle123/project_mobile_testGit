@@ -1,14 +1,16 @@
 import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import AwaitingConFirm from "../screens/UserScreen/StatusDelivery/AwaitingConFirmScreen";
-import AwatingGoods from "../screens/UserScreen/StatusDelivery/AwatingGoodsScreen";
-import AwaitingDelivery from "../screens/UserScreen/StatusDelivery/AwaitingDeliveryScreen";
-import SuccsesScreen from "../screens/UserScreen/StatusDelivery/SuccsesScreen";
+import { AwaitingConFirm, AwaitingDelivery, AwatingGoods, SuccsesScreen } from "../screens";
+
 const Tab = createMaterialTopTabNavigator();
 const TopTabNavigation = () => {
   return (
-    <Tab.Navigator
+    <View style={[{flex: 1}]}>
+      <View className='justify-center items-center bg-slate-300' style={[{height: "10%", }]}>
+        <Text className='text-white font-bold text-base'>Trạng thái đơn hàng</Text>
+      </View>
+      <Tab.Navigator
       screenOptions={{
         tabBarIndicatorStyle: {
           backgroundColor: "#FF5678",
@@ -27,6 +29,7 @@ const TopTabNavigation = () => {
         style: {
           // backgroundColor: ,
         },
+        
       }}
     >
       <Tab.Screen
@@ -58,6 +61,7 @@ const TopTabNavigation = () => {
         }}
       />
     </Tab.Navigator>
+    </View>
   );
 };
 export default TopTabNavigation;
