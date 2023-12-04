@@ -20,9 +20,8 @@ const Stack = createStackNavigator();
 function AuthStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Admin" component={AdminDrawer} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="Admin" component={AdminTab} />
+      <Stack.Screen name="Admin" component={AdminDrawer} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
       <Stack.Screen name="ForgetScreen" component={ForgetScreen} />

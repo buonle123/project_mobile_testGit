@@ -9,9 +9,7 @@ export default function App() {
     <AuthContextProvider>
       <PhoneContextProvider>
         <FavoriteProductsProvider>
-          <SafeAreaView style={{ flex: 1, marginTop: 20 }}>
-            <Navigation />
-          </SafeAreaView>
+          <Navigation />
         </FavoriteProductsProvider>
       </PhoneContextProvider>
     </AuthContextProvider>
