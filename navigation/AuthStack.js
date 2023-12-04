@@ -45,8 +45,8 @@ export default function Navigation() {
   const authContext = useContext(AuthContext);
   return (
     <NavigationContainer>
-      {/* {authContext.isAuthenticated ? <UserStack /> : <AuthStack />} */}
-      {true ? <UserStack /> : <AuthStack />}
+      {authContext.isAuthenticated ? <UserStack /> : <AuthStack />}
+      {/* {true ? <UserStack /> : <AuthStack />} */}
     </NavigationContainer>
   );
 }

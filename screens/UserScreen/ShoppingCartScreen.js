@@ -68,7 +68,7 @@ export default function ShoppingCartScreen({ navigation }) {
       <View style={{ height: height * 0.93 }} className=''>
         <View className='w-full my-5 justify-between items-center flex-row'>
           <Text className='text-lg ml-5 font-medium'>Cart</Text>
-          <TouchableOpacity className='mr-5'>
+          <TouchableOpacity className='mr-5' onPress={()=>{navigation.navigate("Buy")}}>
             <Ionicon name='cart-outline' size={30} />
           </TouchableOpacity>
         </View>

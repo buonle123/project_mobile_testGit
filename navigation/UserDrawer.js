@@ -4,7 +4,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, Dimensions } from 'react-native'
 import StackPhoneList from './StackPhoneList'
-import { SettingUserScreen, EditPass, EditUser, Buy } from '../screens'
+import { SettingUserScreen, EditPass, EditUser, } from '../screens'
 import TopTabNavigation from './TopTabNavigation';
 const Drawer = createDrawerNavigator()
 

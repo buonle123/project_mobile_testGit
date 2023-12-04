@@ -15,7 +15,6 @@ export default function SettingUserScreen() {
       <View style={[st.shadow, { width: '90%', height: '50%' }]} className='bg-white rounded-xl mt-5'>
         <ScrollView className='px-2 py-2'>
           <View className='my-5'>
-            <Text className='font-medium'><Ionicon name='location-outline' size={25} color={' rgb(234 88 12)'} />Địa chỉ: </Text>
           </View>
           <View className='my-5'>
             <Text className='font-medium'><Ionicon name='at-outline' size={25} color={' rgb(234 88 12)'} />Email: </Text>
@@ -40,7 +39,7 @@ const st = StyleSheet.create({
     display: 'flex',
     width: '100%',
     alignItems: 'center',
-    height: height * 0.85,
+    height: height * 0.93,
     // backgroundColor: '#fffff',
     // marginTop: '5%'
   },

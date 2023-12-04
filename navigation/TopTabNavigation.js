@@ -33,7 +33,7 @@ const TopTabNavigation = () => {
       }}
     >
       <Tab.Screen
-        name="Awaiting Confirm"
+        name="AwaitingConfirm"
         component={AwaitingConFirm}
         options={{
           tabBarLabel: "Chờ xác nhận",
