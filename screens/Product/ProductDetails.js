@@ -143,7 +143,6 @@ export default function ProductDetails({ route, navigation }) {
       }
     })
     setButtonText(!buttonText);
-    console.log(cart.length);
   }
 
   return (
@@ -305,8 +304,8 @@ export default function ProductDetails({ route, navigation }) {
         className="items-center "
       >
         <TouchableOpacity
-          className="bg-orange-400 h-full rounded-xl mt-4"
-          style={{ width: width * 0.98 }}
+          className="bg-orange-400  rounded-xl mt-4"
+          style={{ width: width * 0.98 , height:"80%"}}
           onPress={() => {
             addCart()
             // navigation.navigate("OrderScreen", { productItem: productItem });

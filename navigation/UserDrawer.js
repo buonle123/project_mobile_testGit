@@ -5,6 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, Dimensions } from 'react-native'
 import StackPhoneList from './StackPhoneList'
 import { SettingUserScreen, EditPass, EditUser, Buy } from '../screens'
+import TopTabNavigation from './TopTabNavigation';
 const Drawer = createDrawerNavigator()
 
 const { width, height } = Dimensions.get('window')
@@ -89,7 +90,7 @@ const UserDrawer = ({ navigation }) => {
                     title: 'Buy',
                     drawerIcon: ({color, size}) => <Ionicons name='reader-outline' size={size} color={color}/>
                 }}
-                component={Buy}
+                component={TopTabNavigation}
             />
 
 

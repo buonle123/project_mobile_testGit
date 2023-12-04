@@ -9,7 +9,7 @@ import ItemOrder from '../../components/ItemOrder';
 const { width, height } = Dimensions.get('window');
 
 export default function OrderScreen({ route, navigation }) {
-  const { cartItem } = route.params;
+  const { CartItem } = route.params;
 
   const [showipAddress, setShowipAddress] = useState(false);
 
@@ -26,39 +26,56 @@ export default function OrderScreen({ route, navigation }) {
   const [sl, setSL] = useState(1)
 
   const updateSL = (vl) => {
-    
+
   }
 
   // const input = (place) =>{
 
   // }
 
-  
-
-  const placeAnOder = ()=>{
 
 
-    const cartItem = {
+  const placeAnOder = () => {
+
+
+    const c = {
       address: address,
       yName: yName,
       email: email,
       phone: phone,
-      quantity: sl,
-      // sumPrice: sl*cartItem.cart[0].product.priceNew,
-      time: new Date()
+      time: new Date(),
+      CartItem: CartItem
     }
-    
-    navigation.navigate('ShoppingCart', {cartItem: cartItem}, {popTo: 'HomeUserSC'});
+
+    navigation.navigate('ShoppingCart', {CartItem: c}, {popTo: 'HomeUserSC'});
+    console.log(CartItem);
 
   }
-  console.log(cartItem);
+
+  const renderItems = () => {
+    return CartItem.cart.map((item, i) => {
+      return (
+        <View className='flex-row items-center w-full h-32 px-2 py-4 mt-5 rounded-xl' style={[st.shadow, st.container]}>
+          <View>
+            <Image className='w-24 h-24' source={item.product.img[0]} />
+          </View>
+          <View className='justify-around h-24'>
+            <Text className='text-lg'>{item.product.title}</Text>
+            <Text>số lượng: {item.quantity}</Text>
+            <Text>price: {(item.product.priceNew * item.quantity).toLocaleString('en-US')}₫</Text>
+
+          </View>
+        </View>
+      )
+    })
+  }
 
 
 
   return (
     <View className='flex-1 pt-5'>
       <View className='flex-row items-center w-full bg-slate-400' style={[st.shadowHeader, { height: height * 0.08 }]}>
-        <TouchableOpacity className='items-center justify-center w-10 h-10 ml-4 rounded-xl bg-slate-300 ' onPress={()=>{navigation.goBack()}}>
+        <TouchableOpacity className='items-center justify-center w-10 h-10 ml-4 rounded-xl bg-slate-300 ' onPress={() => { navigation.goBack() }}>
           <Text>{<Ionicon name='chevron-back-outline' size={30} color={'white'} />}</Text>
         </TouchableOpacity>
 
@@ -68,33 +85,16 @@ export default function OrderScreen({ route, navigation }) {
       <View className='items-center h-full py-5' style={{ height: height * 0.83 }}>
         <View style={{ width: width }} className='items-center'>
           <ScrollView className='h-full ' style={{ width: width * 0.9 }}>
-            <ItemOrder icon={<Ionicon name='location-outline' size={25} color={' rgb(234 88 12)'} />} title={'Địa chỉ nhận hàng: '} data={address} setData={setAddress}/>
-            <ItemOrder icon={<Ionicon name='person-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your name:'} data={yName} lable={'New Name'} setData={setName}/>
-            <ItemOrder icon={<Ionicon name='at-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your email address:'} data={email} lable={'New mail'} setData={setEmail}/>
-            <ItemOrder icon={<Ionicon name='call-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your phone number:'} data={phone} lable={'New phone number'} setData={setPhone}/>
+            <ItemOrder icon={<Ionicon name='location-outline' size={25} color={' rgb(234 88 12)'} />} title={'Địa chỉ nhận hàng: '} data={address} setData={setAddress} />
+            <ItemOrder icon={<Ionicon name='person-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your name:'} data={yName} lable={'New Name'} setData={setName} />
+            <ItemOrder icon={<Ionicon name='at-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your email address:'} data={email} lable={'New mail'} setData={setEmail} />
+            <ItemOrder icon={<Ionicon name='call-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your phone number:'} data={phone} lable={'New phone number'} setData={setPhone} />
 
 
-            {/* <View className='flex-row items-center w-full h-32 px-2 py-4 mt-5 rounded-xl' style={[st.shadow, st.container]}>
-              <View>
-                <Image className='w-24 h-24' source={cartItem.cart[0].product.img[0]} />
-              </View>
-              <View className='justify-around h-24'>
-                <Text className='text-lg'>{cartItem.cart[0].product.title}</Text>
-                <View className='flex-row items-center justify-center rounded-lg bg-slate-300'>
-                  <TouchableOpacity onPress={() => { updateSL(-1) }}>
-                    <Ionicon name='remove' size={20} />
-                  </TouchableOpacity>
-                  <Text className='mx-5 text-2xl'>{sl}</Text>
-                  <TouchableOpacity onPress={() => { updateSL(1) }}>
-                    <Ionicon name='add' size={20} />
-                  </TouchableOpacity>
+            {renderItems()}
 
-                </View>
-              </View>
-            </View> */}
-
-            <TouchableOpacity className='mt-10 bg-orange-400 h-14 rounded-xl' onPress={()=>{placeAnOder()}}>
-              <Text className='my-auto text-xl font-medium text-center text-white'>Tổng đơn: {(20000).toLocaleString('en-US')}₫</Text>
+            <TouchableOpacity className='mt-10 bg-orange-400 h-14 rounded-xl' onPress={() => { placeAnOder() }}>
+              <Text className='my-auto text-xl font-medium text-center text-white'>Tổng đơn: {(CartItem.totalAmount).toLocaleString('en-US')}₫</Text>
             </TouchableOpacity>
 
           </ScrollView>

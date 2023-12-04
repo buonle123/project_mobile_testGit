@@ -27,11 +27,21 @@ const ItemCart = ({ product, id, amount, setAmount }) => {
 
     const [showItem, setShowItem] = useState(false)
 
+    const deleteItemCart = (i)=>{
+        console.log(cart[0].id);
+        const vt = cart.findIndex(item=>{
+            return item.id == i;
+        })
+        let list = [...cart]
+        list.splice(vt, 1)
+        setCart(list);
+        console.log(vt);
+    }
+
     const right = () => {
         return (
             <View className='w-1/4 h-full justify-center items-center'>
-                <TouchableOpacity className='justify-center items-center w-20 h-20 rounded-xl' style={[st.shadow]}>
-                    {/* <Ionicon name='trash-outline' size={40} color={'red'}/> */}
+                <TouchableOpacity className='justify-center items-center w-20 h-20 rounded-xl' key={id} style={[st.shadow]} onPress={()=>{deleteItemCart(id)}}>
                     <Text className='text-red-500 text-base font-semibold'>Hủy đơn</Text>
                 </TouchableOpacity>
             </View>
