@@ -18,6 +18,8 @@ import {
 } from "react-native";
 import StackPhoneList from "./StackPhoneList";
 import { AuthContext } from "../store/auth-context";
+import UserManage from "../screens/Admin/UserManage";
+import AdminTab from "./AdminTab";
 
 const Drawer = createDrawerNavigator();
 
@@ -68,7 +70,7 @@ const AdminDrawer = () => {
       }}
       screenOptions={{
         drawerStyle: { backgroundColor: "#fff", width: 250 },
-        headerStyle: { backgroundColor: "red" },
+        headerStyle: { backgroundColor: "#ff4859" },
         headerTintColor: "white",
         headerTitleStyle: { fontWeight: "bold" },
         drawerActiveTintColor: "red",
@@ -84,7 +86,18 @@ const AdminDrawer = () => {
             <Ionicons name="home" size={size} color={color} />
           ),
         }}
-        component={HomeUserStack}
+        component={AdminTab}
+      />
+      <Drawer.Screen
+        name="UserManagement"
+        options={{
+          drawerLabel: "User Management",
+          title: "User Management",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="people-outline" size={size} color={color} />
+          ),
+        }}
+        component={UserManage}
       />
       <Drawer.Screen
         name="ListPhone"
@@ -126,7 +139,7 @@ const AdminDrawer = () => {
 
 const styles = StyleSheet.create({
   headerDrawer: {
-    backgroundColor: "red",
+    backgroundColor: "#ff4859",
     height: 225,
     width: "100%",
     justifyContent: "center",

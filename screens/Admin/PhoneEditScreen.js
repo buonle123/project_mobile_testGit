@@ -4,7 +4,7 @@ import React, { useContext, useLayoutEffect, useState } from "react";
 import ButtonIcon from "../../components/UI/ButtonIcon";
 import PhoneForm from "../../components/ManagePhone/PhoneForm";
 import { PhoneContext } from "../../store/phone-context";
-import { storePhones } from "../../util/http";
+import { deletePhone, storePhones, updataPhone } from "../../util/http";
 // import OverLayLoading from '../components/UI/OverLayLoading'
 const PhoneEditScreen = ({ route, navigation }) => {
   const [isSubmiting, setIsSubmiting] = useState(false);
@@ -21,7 +21,7 @@ const PhoneEditScreen = ({ route, navigation }) => {
   }, [navigation, isEditing]);
   async function deleteExpenseHandler() {
     // setIsSubmiting(true)
-    // await deleteExpense(edtExpenseId)
+    await deletePhone(edtPhoneId);
     phonesContext.deletePhone(edtPhoneId);
     navigation.goBack();
   }
@@ -31,12 +31,12 @@ const PhoneEditScreen = ({ route, navigation }) => {
   async function confirmExpenseHandler(phonesData) {
     // setIsSubmiting(true)
     if (isEditing) {
+      await updataPhone(edtPhoneId, phonesData);
       phonesContext.updataPhone(edtPhoneId, phonesData);
-      // await updataPhone(edtExpenseId, phonesData)
     } else {
       // const id = await storeExpense(phonesData)
-      await storePhones(phonesData);
-      phonesContext.addPhone({ ...phonesData });
+      const id = await storePhones(phonesData);
+      phonesContext.addPhone({ ...phonesData, id });
     }
     navigation.goBack();
   }
@@ -65,7 +65,7 @@ const PhoneEditScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "red",
+    backgroundColor: "#d4333b",
     padding: 24,
   },
   deleteContainer: {

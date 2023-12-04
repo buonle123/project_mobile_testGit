@@ -4,7 +4,7 @@ import React from "react";
 const OverLayLoading = () => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator />
+      <ActivityIndicator size="large" color={"#FF5678"} />
     </View>
   );
 };
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-    backgroundColor: "red",
+    backgroundColor: "white",
   },
 });
 export default OverLayLoading;
