@@ -32,9 +32,7 @@ export default function OrderScreen({ route, navigation }) {
 
   }
 
-  // const input = (place) =>{
 
-  // }
 
 
 
@@ -54,7 +52,6 @@ export default function OrderScreen({ route, navigation }) {
     }
 
     orderList.length == 0 ? setOrderList([c]) : setOrderList([...orderList, c])
-    // navigation.navigate('Buy', { CartItem: c });
     console.log(c.id);
     console.log(c);
     setCart([])
