@@ -67,7 +67,7 @@ const UserDrawer = ({ navigation }) => {
                 headerTitleStyle: { fontWeight: 'bold' },
                 drawerActiveTintColor: 'red',
                 drawerLabelStyle: { color: '#111', marginLeft: -15 },
-                headerShown: false
+                headerShown: true
             }}>
             <Drawer.Screen name="Home" options={{
                 drawerLabel: 'Home',

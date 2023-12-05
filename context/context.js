@@ -18,6 +18,12 @@ export const CartProduct = () => {
   return useContext(CartContext)
 }
 
+const OrderContext = createContext();
+
+export const Orders = () => {
+  return useContext(OrderContext)
+}
+
 export const FavoriteProductsProvider = ({ children }) => {
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [userAccounts, setUserAccounts] = useState([]);
@@ -29,13 +35,17 @@ export const FavoriteProductsProvider = ({ children }) => {
 
   const [cart, setCart] = useState([]);
 
+  const [orderList, setOrderList] = useState([])
+
 
   return (
     // <CartContext.Provider value={{ cart, addItemCart }} >
     <AcountUsersContext.Provider value={{ userAccounts, addUser }}>
       <FavoriteProductsContext.Provider value={{ favoriteProducts, setFavoriteProducts }} >
         <CartContext.Provider value={{ cart, setCart }} >
-          {children}
+          <OrderContext.Provider value={{orderList, setOrderList}}>
+            {children}
+          </OrderContext.Provider>
         </CartContext.Provider>
       </FavoriteProductsContext.Provider>
     </AcountUsersContext.Provider>

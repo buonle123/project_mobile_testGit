@@ -7,7 +7,7 @@ const Tab = createMaterialTopTabNavigator();
 const TopTabNavigation = () => {
   return (
     <View style={[{flex: 1}]}>
-      <View className='justify-center items-center bg-slate-300' style={[{height: "10%", }]}>
+      <View className='justify-center items-center bg-slate-300' style={[{height: "0%", }]}>
         <Text className='text-white font-bold text-base'>Trạng thái đơn hàng</Text>
       </View>
       <Tab.Navigator

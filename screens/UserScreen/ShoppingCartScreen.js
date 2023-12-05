@@ -4,11 +4,11 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import ItemCart from '../../components/ItemCart';
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import { CartProduct } from '../../context/context';
+import { useNavigation } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window')
 
-
 export default function ShoppingCartScreen({ navigation }) {
-
+  
   const { cart, setCart } = CartProduct();
   const [selectType, setSelectType] = useState('Tất cả');
   const updateSelectType = (it) => {
@@ -35,7 +35,7 @@ export default function ShoppingCartScreen({ navigation }) {
     if (cart.length == 0) {
       return (
         <View className='items-center justify-center w-full h-full my-5'>
-          <Image className='w-60 h-60' source={require('../../assets/null.png')}/>
+          <Image className='w-60 h-60' source={require('../../assets/null.png')} />
         </View>
       )
     } else {
@@ -68,7 +68,7 @@ export default function ShoppingCartScreen({ navigation }) {
       <View style={{ height: height * 0.93 }} className=''>
         <View className='w-full my-5 justify-between items-center flex-row'>
           <Text className='text-lg ml-5 font-medium'>Cart</Text>
-          <TouchableOpacity className='mr-5' onPress={()=>{navigation.navigate("Buy")}}>
+          <TouchableOpacity className='mr-5' onPress={() => { navigation.navigate("SettingUser", {screen: 'Buy'})}}>
             <Ionicon name='cart-outline' size={30} />
           </TouchableOpacity>
         </View>
