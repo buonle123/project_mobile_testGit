@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/drawer";
 import ListPhoneScreen from "../screens/Admin/ListPhoneScreen";
 import ManageOrder from "../screens/Admin/ManageOrder";
+import AdminHome from "../screens/Admin/AdminHome";
 import { Ionicons } from "@expo/vector-icons";
 import {
   Image,
@@ -17,10 +18,8 @@ import {
 import StackPhoneList from "./StackPhoneList";
 import { AuthContext } from "../store/auth-context";
 import UserManage from "../screens/Admin/UserManage";
-import AdminHome from "../screens/Admin/AdminHome";
 
 const Drawer = createDrawerNavigator();
-
 const AdminDrawer = () => {
   const authContext = useContext(AuthContext);
   function logOut() {
