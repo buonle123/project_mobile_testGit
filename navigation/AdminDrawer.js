@@ -5,8 +5,6 @@ import {
 } from "@react-navigation/drawer";
 import ListPhoneScreen from "../screens/Admin/ListPhoneScreen";
 import ManageOrder from "../screens/Admin/ManageOrder";
-import HomeUserStack from "./HomeUserStack";
-import ManagePhoneScreen from "../screens/Admin/ManagePhoneScreen";
 import { Ionicons } from "@expo/vector-icons";
 import {
   Image,
@@ -19,7 +17,7 @@ import {
 import StackPhoneList from "./StackPhoneList";
 import { AuthContext } from "../store/auth-context";
 import UserManage from "../screens/Admin/UserManage";
-import AdminTab from "./AdminTab";
+import AdminHome from "../screens/Admin/AdminHome";
 
 const Drawer = createDrawerNavigator();
 
@@ -47,7 +45,7 @@ const AdminDrawer = () => {
             </SafeAreaView>
             <View style={styles.bottomDrawer}>
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => { }}
                 style={{ paddingVertical: 15 }}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -86,7 +84,7 @@ const AdminDrawer = () => {
             <Ionicons name="home" size={size} color={color} />
           ),
         }}
-        component={AdminTab}
+        component={AdminHome}
       />
       <Drawer.Screen
         name="UserManagement"

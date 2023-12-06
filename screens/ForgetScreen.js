@@ -10,7 +10,7 @@ const ForgetScreen = ({ navigation }) => {
   async function sendRequestEmail() {
     try {
       console.log("Email in sendRequestEmail:", email);
-      // await forgetPassWordByEmail(email);
+      await forgetPassWordByEmail(email);
       console.log("Password reset request successful");
       navigation.navigate("ChangePassScreen");
     } catch (error) {
