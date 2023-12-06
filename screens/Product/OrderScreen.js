@@ -2,7 +2,7 @@ import { View, Text, Dimensions, TouchableOpacity, StyleSheet, ScrollView, Image
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import React, { useState } from 'react'
 import ItemOrder from '../../components/ItemOrder';
-
+import { CartProduct, Orders } from '../../context/context';
 
 // import InputOrder from '../../components/InputOrder';
 // ItemOrder
@@ -10,6 +10,8 @@ const { width, height } = Dimensions.get('window');
 
 export default function OrderScreen({ route, navigation }) {
   const { CartItem } = route.params;
+  const { cart, setCart } = CartProduct()
+  const { orderList, setOrderList } = Orders()
 
   const [showipAddress, setShowipAddress] = useState(false);
 
@@ -17,6 +19,7 @@ export default function OrderScreen({ route, navigation }) {
   const [yName, setName] = useState('Nguyễn Văn Dũng')
   const [email, setEmail] = useState('dung@123.com')
   const [phone, setPhone] = useState('0346477714')
+  const [orderName, setOrderName] = useState('')
 
   const ShowAddress = () => {
     setShowipAddress(!showipAddress);
@@ -29,9 +32,7 @@ export default function OrderScreen({ route, navigation }) {
 
   }
 
-  // const input = (place) =>{
 
-  // }
 
 
 
@@ -39,16 +40,27 @@ export default function OrderScreen({ route, navigation }) {
 
 
     const c = {
+      orderName: orderName,
       address: address,
       yName: yName,
       email: email,
       phone: phone,
       time: new Date(),
-      CartItem: CartItem
+      CartItem: CartItem,
+      status: "chờ duyệt",
+      id: (orderList.length == 0 ? 0 : orderList[orderList.length - 1].id + 1)
     }
 
-    navigation.navigate('ShoppingCart', {CartItem: c}, {popTo: 'HomeUserSC'});
-    console.log(CartItem);
+    orderList.length == 0 ? setOrderList([c]) : setOrderList([...orderList, c])
+    console.log(c.id);
+    console.log(c);
+    setCart([])
+    // navigation.navigate("SettingUser", { screen: 'Buy' })
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'SettingUser', params: { screen: 'Buy' } }],
+    });
+    // navigation.closeDrawer();
 
   }
 
@@ -85,6 +97,8 @@ export default function OrderScreen({ route, navigation }) {
       <View className='items-center h-full py-5' style={{ height: height * 0.83 }}>
         <View style={{ width: width }} className='items-center'>
           <ScrollView className='h-full ' style={{ width: width * 0.9 }}>
+            <ItemOrder icon={<Ionicon name='receipt-outline' size={25} color={' rgb(234 88 12)'} />} title={' Tên đơn hàng: '} data={orderName} setData={setOrderName} />
+
             <ItemOrder icon={<Ionicon name='location-outline' size={25} color={' rgb(234 88 12)'} />} title={'Địa chỉ nhận hàng: '} data={address} setData={setAddress} />
             <ItemOrder icon={<Ionicon name='person-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your name:'} data={yName} lable={'New Name'} setData={setName} />
             <ItemOrder icon={<Ionicon name='at-outline' size={25} color={' rgb(234 88 12)'} />} title={'Your email address:'} data={email} lable={'New mail'} setData={setEmail} />

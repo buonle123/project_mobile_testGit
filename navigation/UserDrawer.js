@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -6,11 +6,23 @@ import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, D
 import StackPhoneList from './StackPhoneList'
 import { SettingUserScreen, EditPass, EditUser, } from '../screens'
 import TopTabNavigation from './TopTabNavigation';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import OverLayLoading from '../components/UI/OverLayLoading';
+import { AuthContext } from '../store/auth-context';
+import { useState } from 'react/cjs/react.development';
 const Drawer = createDrawerNavigator()
 
 const { width, height } = Dimensions.get('window')
 
 const UserDrawer = ({ navigation }) => {
+    const authContext = useContext(AuthContext);
+    const [isLoging, setIsLoging] = useState(false);
+    const lo = async () => {
+        setIsLoging(true);
+        authContext.logOut();
+        await AsyncStorage.setItem("KeepLogged", "");
+        setIsLoging(false);
+    }
     const logOut = () => {
         Alert.alert(
             'LOG OUT',
@@ -22,11 +34,14 @@ const UserDrawer = ({ navigation }) => {
                     style: 'cancel',
                 },
                 {
-                    text: 'OK', onPress: () => navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }], })
+                    text: 'OK', onPress: () => { lo() }
                 },
             ],
             { cancelable: false }
         );
+    }
+    if (isLoging) {
+        return <OverLayLoading />;
     }
     return (
         <Drawer.Navigator
@@ -67,7 +82,7 @@ const UserDrawer = ({ navigation }) => {
                 headerTitleStyle: { fontWeight: 'bold' },
                 drawerActiveTintColor: 'red',
                 drawerLabelStyle: { color: '#111', marginLeft: -15 },
-                headerShown: false
+                headerShown: true
             }}>
             <Drawer.Screen name="Home" options={{
                 drawerLabel: 'Home',
@@ -88,7 +103,7 @@ const UserDrawer = ({ navigation }) => {
                 name='Buy' options={{
                     drawerLabel: 'Buy',
                     title: 'Buy',
-                    drawerIcon: ({color, size}) => <Ionicons name='reader-outline' size={size} color={color}/>
+                    drawerIcon: ({ color, size }) => <Ionicons name='reader-outline' size={size} color={color} />
                 }}
                 component={TopTabNavigation}
             />
@@ -100,7 +115,7 @@ const UserDrawer = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     headerDrawer: {
-        height: 225, 
+        height: 225,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',

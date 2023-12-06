@@ -123,7 +123,6 @@ export default function ProductDetails({ route, navigation }) {
     }
     const itemCart = {
       product: productItem,
-      check: false,
       quantity: 1,
       id: idIT
     }
