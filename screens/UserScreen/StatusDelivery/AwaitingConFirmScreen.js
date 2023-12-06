@@ -11,14 +11,16 @@ const AwaitingConFirm = () => {
   const renderItem = ()=>{
     if(orderList == 0){
       return (
-        <View><Text>Null</Text></View>
+        <View><Text></Text></View>
       )
     } else{
       return (
         orderList.map((item, i)=>{
-          return (
-            <ItemStatus pricee={item.totalAmount} list={item.CartItem.cart}/>
+          if(item.status == "chờ duyệt"){
+            return (
+              <ItemStatus id={item.id} fItem={item} pricee={item.CartItem.totalAmount} list={item.CartItem.cart}/>
           )
+          }
         })
       )
     }
@@ -26,6 +28,7 @@ const AwaitingConFirm = () => {
   return (
     <View style={{width: "100%", height:"100%"}} className="justify-center items-center">
       <ScrollView className="">
+        <Text></Text>
         {renderItem()}
       </ScrollView>
     </View>

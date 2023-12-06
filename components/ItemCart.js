@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View,} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment/src/moment'
 import Ionicon from 'react-native-vector-icons/Ionicons'
@@ -7,7 +7,7 @@ import { Swipeable } from 'react-native-gesture-handler'
 import { CartProduct } from '../context/context'
 
 
-const ItemCart = ({ product, id, amount, setAmount }) => {
+const ItemCart = ({ product, id, amount, setAmount, navigation }) => {
 
     const { cart, setCart } = CartProduct();
 
@@ -36,6 +36,10 @@ const ItemCart = ({ product, id, amount, setAmount }) => {
         list.splice(vt, 1)
         setCart(list);
         console.log(vt);
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'ShoppingCart' }],
+          });
     }
 
     const right = () => {
@@ -107,7 +111,7 @@ const ItemCart = ({ product, id, amount, setAmount }) => {
                     </View>
 
                     {showItem && (
-                        <View className='mt-4 flex-row items-center justify-center'>
+                        <View className='mt-2 flex-row items-center justify-center'>
                             <Image className='w-24 h-28 mx-2' source={product.product.img[0]} />
                             <View className='w-3/6 justify-center'>
                                 <Text className='mb-4'>Product in stock: {product.product.quantity}</Text>

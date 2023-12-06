@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions} from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment/src/moment'
 import Ionicon from 'react-native-vector-icons/Ionicons'
@@ -6,11 +6,10 @@ import { dataProduct } from '../data/data'
 import { Swipeable } from 'react-native-gesture-handler'
 import { Orders } from '../context/context'
 
-const {width, height} = Dimensions.get('window')
 
-const ItemStatus = ({ fItem, title, timeOrder, product, id, amount, setAmount, pricee, list }) => {
+const ItemStatusNoDelete = ({ fItem, title, timeOrder, product, id, amount, setAmount, pricee, list }) => {
 
-    const { orderList, setOrderList } = Orders()
+    const {orderList, setOrderList} = Orders()
 
     const price = pricee.toLocaleString("en-US")
 
@@ -27,12 +26,12 @@ const ItemStatus = ({ fItem, title, timeOrder, product, id, amount, setAmount, p
 
     const [showItem, setShowItem] = useState(false)
 
-    const deleteItem = (i) => {
-        if (orderList.length == 0) { setOrderList([]); return }
-        const VT = orderList.findIndex((item) => {
+    const deleteItem = (i)=>{
+        if(orderList.length == 0)  {setOrderList([]); return}
+        const VT = orderList.findIndex((item)=>{
             return item.id == i
         })
-
+        
 
         let list = [...orderList]
         list.splice(VT, 1);
@@ -54,14 +53,9 @@ const ItemStatus = ({ fItem, title, timeOrder, product, id, amount, setAmount, p
         return list.map((item, i) => {
             return (
                 <View style={[{ width: "100%" }]} className="justify-center rounded-lg my-2">
-                    <View className='justify-center flex-row py-2  mx-auto' style={[st.shadow, { width: "95%" }]}>
-                        <View >
-                            <Image style={[{width: width*0.25, height: width*0.25}]} source={item.product.img[0]}/>
-                        </View>
-                        <View style={{ textAlign: 'justify', lineHeight: 20, width: "60%"}}>
-                            <Text className='mb-4'>Sản phẩm: {item.product.title}</Text>
-                            <Text className='mb-4'>Số lượng: {item.quantity}</Text>
-                        </View>
+                    <View className='justify-center p-2 mx-auto' style={[st.shadow, { width: "95%" }]}>
+                        <Text className='mb-4'>Sản phẩm: {item.product.title}</Text>
+                        <Text className='mb-4'>Số lượng: {item.quantity}</Text>
                     </View>
                 </View>
             )
@@ -72,7 +66,7 @@ const ItemStatus = ({ fItem, title, timeOrder, product, id, amount, setAmount, p
 
 
     return (
-        <Swipeable renderRightActions={right} key={id}>
+        <Swipeable key={id}>
             <View className=' mx-auto my-5 py-3 rounded-xl px-2 flex-row justify-between' style={[st.shadow, { width: '95%' }]}>
 
                 <View style={[{ width: "100%" }]} >
@@ -114,5 +108,5 @@ const st = StyleSheet.create({
     }
 })
 
-export default ItemStatus
+export default ItemStatusNoDelete
 

@@ -55,7 +55,12 @@ export default function OrderScreen({ route, navigation }) {
     console.log(c.id);
     console.log(c);
     setCart([])
-    navigation.navigate("SettingUser", { screen: 'Buy' })
+    // navigation.navigate("SettingUser", { screen: 'Buy' })
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'SettingUser', params: { screen: 'Buy' } }],
+    });
+    // navigation.closeDrawer();
 
   }
 

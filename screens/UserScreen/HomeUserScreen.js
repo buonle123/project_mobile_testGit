@@ -75,12 +75,11 @@ export default function HomeUser({ navigation }) {
       onPress={() => dotClick(index)}
     >
       <Text
-        className={`text-6xl h-12 font-thin ${
-          indexSlide === i.id
+        className={`text-6xl h-12 font-thin ${indexSlide === i.id
             ? "text-black font-extralight"
             : "text-gray-300 font-thin"
-        }`}
-        onPressIn={() => {}}
+          }`}
+        onPressIn={() => { }}
       >
         -
       </Text>
@@ -226,15 +225,13 @@ export default function HomeUser({ navigation }) {
             return (
               <TouchableOpacity
                 key={id}
-                className={`mx-2 w-20 justify-center items-center rounded-xl ${
-                  id == activeId ? "bg-slate-300" : ""
-                }`}
+                className={`mx-2 w-20 justify-center items-center rounded-xl ${id == activeId ? "bg-slate-300" : ""
+                  }`}
                 onPress={() => setActiveTitle(id)}
               >
                 <Text
-                  className={`text-lg font-medium ${
-                    activeId == item.id ? "text-white" : "text-gray-700"
-                  }`}
+                  className={`text-lg font-medium ${activeId == item.id ? "text-white" : "text-gray-700"
+                    }`}
                 >
                   {item.title}
                 </Text>

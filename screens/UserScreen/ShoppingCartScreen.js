@@ -41,7 +41,7 @@ export default function ShoppingCartScreen({ navigation }) {
     } else {
       return (cart.map((item, i) => {
         return (
-          <ItemCart product={item} id={item.id} amount={totalAmount} setAmount={setAmount} />
+          <ItemCart product={item} id={item.id} amount={totalAmount} setAmount={setAmount} navigation={navigation}/>
         )
       }))
     }
