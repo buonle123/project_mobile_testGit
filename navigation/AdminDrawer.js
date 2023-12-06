@@ -5,8 +5,7 @@ import {
 } from "@react-navigation/drawer";
 import ListPhoneScreen from "../screens/Admin/ListPhoneScreen";
 import ManageOrder from "../screens/Admin/ManageOrder";
-import HomeUserStack from "./HomeUserStack";
-import ManagePhoneScreen from "../screens/Admin/ManagePhoneScreen";
+import AdminHome from "../screens/Admin/AdminHome";
 import { Ionicons } from "@expo/vector-icons";
 import {
   Image,
@@ -19,10 +18,8 @@ import {
 import StackPhoneList from "./StackPhoneList";
 import { AuthContext } from "../store/auth-context";
 import UserManage from "../screens/Admin/UserManage";
-import AdminTab from "./AdminTab";
 
 const Drawer = createDrawerNavigator();
-
 const AdminDrawer = () => {
   const authContext = useContext(AuthContext);
   function logOut() {
@@ -86,7 +83,7 @@ const AdminDrawer = () => {
             <Ionicons name="home" size={size} color={color} />
           ),
         }}
-        component={AdminTab}
+        component={AdminHome}
       />
       <Drawer.Screen
         name="UserManagement"

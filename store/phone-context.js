@@ -7,20 +7,20 @@ export const PhoneContext = createContext({
     priceNew,
     priceOld,
     quantity,
-    productInfo,
+    imgUri,
     typeProduct,
+    productInfo,
   }) => {},
   setPhones: (phones) => {},
   updataPhone: (
     id,
-    { name, priceNew, priceOld, quantity, productInfo, typeProduct }
+    { name, priceNew, priceOld, imgUri, quantity, typeProduct, productInfo }
   ) => {},
   deletePhone: (id) => {},
 });
 function phonesReducer(state, action) {
   switch (action.type) {
     case "ADD":
-      const id = new Date().toString() + Math.random().toString();
       return [action.payload, ...state];
     case "SET":
       return action.payload;

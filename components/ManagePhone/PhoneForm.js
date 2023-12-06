@@ -1,9 +1,23 @@
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useState } from "react";
 import Input from "./Input";
+import { Dimensions } from "react-native";
 import ButtonCustom from "../UI/ButtonCustom";
-
+import DropDownPicker from "react-native-dropdown-picker";
+import * as ImagePicker from "expo-image-picker";
+const { width, height } = Dimensions.get("window");
 const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
+  const [open, setOpen] = useState(false);
+  const [valueType, setValueType] = useState("");
+  const [imgUrl, setImgUrl] = useState([]);
   const [inputs, setInputs] = useState({
     name: { value: defaultValues ? defaultValues.name : "", isValid: true },
     priceNew: {
@@ -18,10 +32,7 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
       value: defaultValues ? defaultValues.quantity.toString() : "",
       isValid: true,
     },
-    typeProduct: {
-      value: defaultValues ? defaultValues.typeProduct : "",
-      isValid: true,
-    },
+
     productInfo: {
       value: defaultValues ? defaultValues.productInfo : "",
       isValid: true,
@@ -36,12 +47,14 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
     });
   }
   function submitHandler() {
+    console.error(imgUrl);
     const phonesData = {
       name: inputs.name.value,
       priceNew: +inputs.priceNew.value,
       priceOld: +inputs.priceOld.value,
       quantity: +inputs.quantity.value,
-      typeProduct: inputs.typeProduct.value,
+      imgUri: imgUrl,
+      typeProduct: valueType,
       productInfo: inputs.productInfo.value,
     };
     const isValiName = phonesData.name.length > 0;
@@ -51,7 +64,6 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
       !isNaN(phonesData.priceOld) && phonesData.priceOld > 0;
     const isValiQuantity =
       !isNaN(phonesData.quantity) && phonesData.quantity > 0;
-    const isValiTypeProduct = phonesData.typeProduct.length > 0;
     const isValiProductInfo = phonesData.productInfo.length > 0;
 
     if (
@@ -59,7 +71,6 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
       !isValiPriceNew ||
       !isValiPriceOld ||
       !isValiQuantity ||
-      !isValiTypeProduct ||
       !isValiProductInfo
     ) {
       Alert.alert("Invalid Input", "Please check your input Value");
@@ -78,10 +89,6 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
             value: currentInput.quantity.value,
             isValid: isValiQuantity,
           },
-          typeProduct: {
-            value: currentInput.typeProduct.value,
-            isValid: isValiTypeProduct,
-          },
           productInfo: {
             value: currentInput.productInfo.value,
             isValid: isValiProductInfo,
@@ -97,14 +104,72 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
     !inputs.priceNew.isValid ||
     !inputs.priceOld.isValid ||
     !inputs.quantity.isValid ||
-    !inputs.typeProduct.isValid ||
     !inputs.productInfo.isValid;
+  async function openLib() {
+    try {
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permissionResult.granted) {
+        console.error("Permission to access media library was denied");
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsMultipleSelection: true,
+      });
+      if (!result.canceled) {
+        console.log(result);
+        // Use the first asset's URI
+        if (result.assets && result.assets.length > 0) {
+          setImgUrl((prevImgs) => [
+            ...prevImgs,
+            ...result.assets.map((asset) => asset.uri),
+          ]);
+        }
+      }
+    } catch (error) {
+      console.error("Error opening image library:", error);
+    }
+  }
+
+  function renderImgs() {
+    if (imgUrl.length === 0) return;
+    return imgUrl.map((img, i) => {
+      console.log(img);
+      return (
+        <View key={i}>
+          <Image
+            resizeMode="contain"
+            style={styles.img}
+            source={{
+              uri: img,
+            }}
+          />
+        </View>
+      );
+    });
+  }
   return (
-    <ScrollView
-      style={styles.containerInput}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={styles.containerInput}>
       <Text style={styles.title}>Your Phone</Text>
+      <View style={styles.containerPickerImg}>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+          {renderImgs()}
+        </ScrollView>
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity onPress={openLib}>
+            <View style={styles.buttonCircleAdd}>
+              <Text style={styles.iconAdd}>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
       <Input
         style={styles.rowInput}
         invalid={!inputs.name.isValid}
@@ -144,14 +209,27 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
           value: inputs.quantity.value,
         }}
       />
-      <Input
-        style={styles.rowInput}
-        invalid={!inputs.typeProduct.isValid}
-        label={"Type Product"}
-        textInputConfig={{
-          onChangeText: inputChangeValue.bind(this, "typeProduct"),
-          value: inputs.typeProduct.value,
+      <Text style={{ marginLeft: 7, marginTop: 6, marginBottom: 8 }}>
+        Type Product
+      </Text>
+      <DropDownPicker
+        open={open}
+        value={valueType}
+        items={[
+          { label: "Iphone", value: "Iphone" },
+          { label: "Ipad", value: "Ipad" },
+          { label: "MacBook", value: "MacBook" },
+        ]}
+        itemSeparatorStyle={{ borderRadius: 8 }}
+        dropDownContainerStyle={{ borderRadius: 8, marginLeft: 15 }}
+        onSelectItem={(item) => {
+          setValueType(item.value);
+          setOpen(false);
         }}
+        onPress={() => {
+          setOpen(!open);
+        }}
+        containerStyle={{ width: "100%", paddingHorizontal: 15 }}
       />
       <Input
         label={"Product Info"}
@@ -175,10 +253,11 @@ const PhoneForm = ({ onCancel, onSubmit, buttonLabel, defaultValues }) => {
           {buttonLabel}
         </ButtonCustom>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
+  containerInput: {},
   title: {
     fontSize: 28,
     color: "white",
@@ -199,6 +278,29 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     margin: 8,
+  },
+  img: {
+    height: width * 0.5,
+    width: width * 0.5,
+    alignSelf: "center",
+  },
+  containerPickerImg: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonCircleAdd: {
+    marginTop: 25,
+    backgroundColor: "#ff4859",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconAdd: {
+    color: "white",
+    fontSize: 24,
   },
 });
 

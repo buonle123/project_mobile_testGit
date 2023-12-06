@@ -128,8 +128,8 @@ export default function HomeUser({ navigation }) {
 
   const logOut = async () => {
     setIsLoging(true);
-    authContext.logOut();
     await AsyncStorage.setItem("KeepLogged", "");
+    authContext.logOut();
     setIsLoging(false);
   };
   if (isLoging) {

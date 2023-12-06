@@ -24,6 +24,7 @@ const ManagePhoneScreen = () => {
   function editHanlder() {
     navigation.navigate("PhoneEditScreen");
   }
+  console.log(phonesContext.phones);
   return (
     <View style={{ flex: 1 }}>
       <FlatList

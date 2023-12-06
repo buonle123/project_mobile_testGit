@@ -1,7 +1,8 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView, FlatList } from "react-native";
 import React, { useContext, useLayoutEffect, useState } from "react";
 // import { ExpenseContext } from '../store/context/expense-context'
 import ButtonIcon from "../../components/UI/ButtonIcon";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PhoneForm from "../../components/ManagePhone/PhoneForm";
 import { PhoneContext } from "../../store/phone-context";
 import { deletePhone, storePhones, updataPhone } from "../../util/http";
@@ -43,29 +44,39 @@ const PhoneEditScreen = ({ route, navigation }) => {
   // if (isSubmiting) return <OverLayLoading />
   return (
     <View style={styles.container}>
-      <PhoneForm
-        onCancel={cancelExpenseHandler}
-        onSubmit={confirmExpenseHandler}
-        buttonLabel={isEditing ? "Updata" : "Add"}
-        defaultValues={selectPhone}
-      />
-      {isEditing && (
-        <View style={styles.deleteContainer}>
-          <ButtonIcon
-            icon={"trash"}
-            size={36}
-            color={"white"}
-            onPress={deleteExpenseHandler}
+      <FlatList
+        style={styles.container}
+        ListHeaderComponent={() => (
+          <PhoneForm
+            onCancel={cancelExpenseHandler}
+            onSubmit={confirmExpenseHandler}
+            buttonLabel={isEditing ? "Updata" : "Add"}
+            defaultValues={selectPhone}
           />
-        </View>
-      )}
+        )}
+        ListFooterComponent={() =>
+          isEditing && (
+            <View style={styles.deleteContainer}>
+              <ButtonIcon
+                icon={"trash"}
+                size={36}
+                color={"white"}
+                onPress={deleteExpenseHandler}
+              />
+            </View>
+          )
+        }
+        data={[]}
+        keyExtractor={() => "Fake"}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#d4333b",
+    backgroundColor: "#ffe6e6",
     padding: 24,
   },
   deleteContainer: {
