@@ -37,7 +37,7 @@ const EditUser = () => {
           <InputEditUser Icon={'call-outline'} placeholder={'phone'} vlue={phone} onChange={editphone}/>
           {/* <InputEditUser Icon={'person-outline'} placeholder={'new name'} /> */}
 
-          <View className='w-3/4 h-12 mx-auto rounded-lg mt-10 mb-20' style={[st.shadow, { backgroundColor: 'rgba(242, 242, 242, 0.8)' }]}>
+          <View className='w-3/4 h-12 mx-auto rounded-lg mt-10 mb-20' style={[st.shadow]}>
             <TouchableOpacity className='w-full h-full' onPress={save}>
               <Text className='m-auto text-lg font-semibold'>SAVE</Text>
             </TouchableOpacity>
@@ -50,8 +50,8 @@ const EditUser = () => {
 
 const st = StyleSheet.create({
   shadow: {
-    shadowColor: '#262626', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff'
-  }
+    shadowColor: '#262626', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff', elevation: 5
+}
 })
 
 export default EditUser

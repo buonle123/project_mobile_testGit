@@ -47,6 +47,6 @@ const st = StyleSheet.create({
 
   },
   shadow: {
-    shadowColor: '#8c8c8c', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff'
+    shadowColor: '#8c8c8c', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff', elevation: 5
   }
 })

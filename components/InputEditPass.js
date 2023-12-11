@@ -20,7 +20,7 @@ const InputEditPass = ({vlue, setVL, placeholder}) => {
 
 const st = StyleSheet.create({
     shadow: {
-        shadowColor: '#262626', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff'
+        shadowColor: '#262626', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff', elevation: 5
     }
 })
 

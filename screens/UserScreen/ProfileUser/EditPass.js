@@ -41,12 +41,11 @@ const EditPass = () => {
                     <InputEditPass vlue={pass} setVL={updatePass} placeholder={'Please enter pass'}/>
                     <InputEditPass vlue={rPass} setVL={updateRPass} placeholder={'Please enter re-pass'}/>
 
-                    <View className='w-3/4 h-12 mx-auto mt-24 rounded-lg' style={[st.shadow, {backgroundColor:'rgba(242, 242, 242, 0.8)'}]}>
+                    <View className='w-3/4 h-12 mx-auto rounded-lg mt-28 mb-20' style={[st.shadow]}>
                         <TouchableOpacity className='w-full h-full' onPress={save}>
                             <Text className='m-auto text-lg font-semibold'>SAVE</Text>
                         </TouchableOpacity>
                     </View>
-
                 </ScrollView>
             </LinearGradient>
 
@@ -56,7 +55,7 @@ const EditPass = () => {
 
 const st = StyleSheet.create({
     shadow: {
-        shadowColor: '#262626', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff'
+        shadowColor: '#262626', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: '#ffffff', elevation: 5
     }
 })
 
